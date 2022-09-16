@@ -1,7 +1,7 @@
 NAME = cub3d
 CC = cc
 CFLAGS = -Wall -Wextra -Werror 
-SRCS = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c 
+SRCS = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c render.c
 INC = -lmlx -framework OpenGL -framework AppKit 
 
 LIBFT_A = libft.a
