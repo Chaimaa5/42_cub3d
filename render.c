@@ -33,7 +33,7 @@ void	render_player(t_cub *data, int r)
 	}
 }
 
-void	render_square(t_cub *data, int x, int y)
+void	render_square(t_cub *data, int x, int y, int color)
 {
 	int i = 0, j = 0;
 	while(i < 50)
@@ -41,7 +41,7 @@ void	render_square(t_cub *data, int x, int y)
 		j = 0;
 		while(j < 50)
 		{
-			mlx_pixel_put(data->mlx, data->mlx_win, x + j, y + i, 0xFFFFFF);
+			mlx_pixel_put(data->mlx, data->mlx_win, x + j, y + i, color);
 			j++;
 		}
 		i++;
@@ -58,13 +58,7 @@ void	render_map(t_cub *data)
 		while(data->map[j][i])
 		{
 			if(data->map[j][i] == '1')
-				render_square(data, i * 50, j * 50);
-			else if(data->map[j][i] == 'N')
-			{
-				render_player(data, 10);
-				render_line(data, i * 50, j * 50, (i*50) + 50, (j*50) + 50);
-			}
-
+				render_square(data, i * 50, j * 50, 0xFFFFFF);
 			i++;
 		}
 		j++;
