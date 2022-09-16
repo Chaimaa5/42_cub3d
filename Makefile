@@ -23,7 +23,7 @@ clean :
 	rm -f ${OBJ}
 	rm -f inc/libft/*.o
 fclean : clean
-	rm -f so_long
+	rm -f cub3d
 	rm -f $(LIBFT_A)
 	rm -f inc/libft/libft.a 
 re : fclean all

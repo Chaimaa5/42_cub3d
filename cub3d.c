@@ -23,24 +23,24 @@ char	**read_map(int i)
 	return (p);
 }
 
-void	draw_player(t_cub *data)
-{
-	int i = 0;
-	int j = 0;
-	while(data->map[j])
-	{
-		i = 0;
-		while(data->map[j][i])
-		{
-			if(data->map[j][i] == 'N')
-			{
-				mlx_pixel_put(data->mlx, data->mlx_win, i*50, j*50, 0x00FF0000);
-			}
-			i++;
-		}
-		j++;
-	}
-}
+// void	draw_player(t_cub *data)
+// {
+// 	int i = 0;
+// 	int j = 0;
+// 	while(data->map[j])
+// 	{
+// 		i = 0;
+// 		while(data->map[j][i])
+// 		{
+// 			if(data->map[j][i] == 'N')
+// 			{
+// 				mlx_pixel_put(data->mlx, data->mlx_win, i*50, j*50, 0x00FF0000);
+// 			}
+// 			i++;
+// 		}
+// 		j++;
+// 	}
+// }
 
 
 void draw_line(t_cub *data, int beginX, int beginY, int endX, int endY, int color)
@@ -64,6 +64,50 @@ void draw_line(t_cub *data, int beginX, int beginY, int endX, int endY, int colo
 	}
 }
 
+void	draw_player(t_cub *data, int x, int y, int r, int color)
+{
+	double angle = 0, x1, y1;
+	while(angle < 360)
+	{
+		x1 = r * cos(angle * PI / 180);
+		y1 = r * sin(angle * PI / 180);
+		mlx_pixel_put(data->mlx, data->mlx_win, x + x1, y + y1, color);
+		angle += 0.1;
+	}
+}
+
+void	draw_square(t_cub *data, int x, int y, int color)
+{
+	int i = 0, j = 0;
+	while(i < 50)
+	{
+		j = 0;
+		while(j < 50)
+		{
+			mlx_pixel_put(data->mlx, data->mlx_win, x + j, y + i, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void draw_map(t_cub *data)
+{
+	int i;
+	int j = 0;
+	while(data->map[j])
+	{
+		i = 0;
+		while(data->map[j][i])
+		{
+			if(data->map[j][i] == '1')
+				draw_square(data, i * 50, j * 50, 0xFFFFFF);
+			i++;
+		}
+		j++;
+	}
+}
+
 void	window(t_cub *data)
 {
 	int	i;
@@ -75,8 +119,11 @@ void	window(t_cub *data)
 		j++;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, i * 50, j * 50, "Cub3d!");
-	draw_line(data, 10, 200, 1000, 2000, 0xFFFFFF);
+	//draw_line(data, 100, 100, 1000, 2000, 0xFFFFFF);
+	//draw_player(data, 100, 100, 10, 0xFFFFFF);
+	draw_map(data);
 	// mlx_key_hook(mlx_win, keys, data);
+
 	// mlx_hook(mlx_win, 17, 0L, mouse, mlx);
 	mlx_loop(data->mlx);
 }
