@@ -102,6 +102,12 @@ void draw_map(t_cub *data)
 		{
 			if(data->map[j][i] == '1')
 				draw_square(data, i * 50, j * 50, 0xFFFFFF);
+			else if(data->map[j][i] == 'N')
+			{
+				draw_player(data, i * 50, j * 50, 10, 0xFFFFFF);
+				draw_line(data, i * 50, j * 50, (i*50) + 50, (j*50) + 50 , 0xFFFFFF);
+			}
+
 			i++;
 		}
 		j++;
@@ -120,7 +126,6 @@ void	window(t_cub *data)
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, i * 50, j * 50, "Cub3d!");
 	//draw_line(data, 100, 100, 1000, 2000, 0xFFFFFF);
-	//draw_player(data, 100, 100, 10, 0xFFFFFF);
 	draw_map(data);
 	// mlx_key_hook(mlx_win, keys, data);
 
