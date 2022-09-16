@@ -24,7 +24,7 @@ typedef struct s_cub{
 }   t_cub;
 
 
-void	render_line(t_cub *data, int beginX, int beginY, int endX, int endY);
+void	render_line(t_cub *data, int beginX, int beginY, int endX, int endY, int color);
 void	render_player(t_cub *data, int r);
 void	render_square(t_cub *data, int x, int y, int color);
 void	render_map(t_cub *data);

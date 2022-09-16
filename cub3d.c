@@ -22,16 +22,16 @@ char	**read_map(int i)
 	return (p);
 }
 
-void	rotate(t_cub *data, double angle)
-{
-	double tmp;
-	// render_square(data, data->xpos * 50, data->ypos * 50, 0x050505);
-	tmp = ((data->xpos * cos(angle)) - (data->ypos * sin(angle)));
-	data->ypos = ((data->xpos * sin(angle)) + (data->ypos * cos(angle)));
-	data->xpos = tmp;
-	render_player(data, 3);
-	render_line(data, data->xpos * 50, data->ypos * 50, (data->xpos*50) + 50, (data->ypos*50) + 50);
-}
+// void	rotate(t_cub *data, double angle)
+// {
+// 	double tmp;
+// 	// render_square(data, data->xpos * 50, data->ypos * 50, 0x050505);
+// 	tmp = ((data->xpos * cos(angle)) - (data->ypos * sin(angle)));
+// 	data->ypos = ((data->xpos * sin(angle)) + (data->ypos * cos(angle)));
+// 	data->xpos = tmp;
+// 	render_player(data, 3);
+// 	render_line(data, data->xpos * 50, data->ypos * 50, (data->xpos*50) + 50, (data->ypos*50) + 50, 0x);
+// }
 
 int key_handler(int key, t_cub *data)
 {
@@ -43,6 +43,11 @@ int key_handler(int key, t_cub *data)
 		data->side = 1;
 	else if(key == KEY_LEFT)
 		data->side = -1;
+		
+		// render_line(data, data->xpos * 50 , data->ypos * 50, ((data->xpos + cos(data->rotation_angle)) * 50), ((data->ypos + sin(data->rotation_angle)) *50 ),0x000000);
+	data->rotation_angle += data->side * data->rotation_speed;
+	render_line(data, data->xpos * 50 , data->ypos * 50, ((data->xpos + cos(data->rotation_angle)) * 50), ((data->ypos + sin(data->rotation_angle)) *50 ), 0xFFFFFF);
+
 	return (0);	
 }
 
@@ -85,9 +90,8 @@ void	window(t_cub *data)
 	player_pos(data);
 	render_map(data);
 	render_player(data, 3);
+	// render_line(data, data->xpos * 50 , data->ypos * 50, ((data->xpos + cos(data->rotation_angle)) * 50), ((data->ypos + sin(data->rotation_angle)) *50 ), 0xFFFFFF);
 	mlx_key_hook(data->mlx_win, key_handler, data);
-	data->rotation_angle += data->side * data->rotation_speed;
-	render_line(data, data->xpos , data->ypos, (data->xpos + cos(data->rotation_angle) * 30), (data->ypos + sin(data->rotation_angle) *30 ));
 	// mlx_hook(mlx_win, 17, 0L, mouse, mlx);
 	mlx_loop(data->mlx);
 }

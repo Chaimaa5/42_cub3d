@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	render_line(t_cub *data, int beginX, int beginY, int endX, int endY)
+void	render_line(t_cub *data, int beginX, int beginY, int endX, int endY, int color)
 {
 	double deltaX;
 	double deltaY;
@@ -14,7 +14,7 @@ void	render_line(t_cub *data, int beginX, int beginY, int endX, int endY)
 	deltaY /= pixels;
 	while (pixels)
 	{
-	    mlx_pixel_put(data->mlx, data->mlx_win, pixelX, pixelY, 0xFFFFFF);
+	    mlx_pixel_put(data->mlx, data->mlx_win, pixelX, pixelY, color);
 	    pixelX += deltaX;
 	    pixelY += deltaY;
 	    --pixels;
