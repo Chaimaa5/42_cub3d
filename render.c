@@ -21,14 +21,14 @@ void	render_line(t_cub *data, int beginX, int beginY, int endX, int endY)
 	}
 }
 
-void	render_player(t_cub *data, int x, int y, int r)
+void	render_player(t_cub *data, int r)
 {
 	double angle = 0, x1, y1;
 	while(angle < 360)
 	{
 		x1 = r * cos(angle * PI / 180);
 		y1 = r * sin(angle * PI / 180);
-		mlx_pixel_put(data->mlx, data->mlx_win, x + x1, y + y1, 0xFFFFFF);
+		mlx_pixel_put(data->mlx, data->mlx_win, (data->xpos * 50) + x1, (data->ypos * 50) + y1, 0xFFFFFF);
 		angle += 0.1;
 	}
 }
@@ -61,7 +61,7 @@ void	render_map(t_cub *data)
 				render_square(data, i * 50, j * 50);
 			else if(data->map[j][i] == 'N')
 			{
-				render_player(data, i * 50, j * 50, 10);
+				render_player(data, 10);
 				render_line(data, i * 50, j * 50, (i*50) + 50, (j*50) + 50);
 			}
 

@@ -22,6 +22,34 @@ char	**read_map(int i)
 	return (p);
 }
 
+void key_handler(int key, t_cub *data)
+{
+	if(key == KEY_UP)
+		data->
+
+}
+
+void player_pos(t_cub *data)
+{
+	int i;
+	int j;
+	j = 0;
+	while(data->map[j])
+	{
+		i = 0;
+		while(data->map[j][i])
+		{
+			if(data->map[j][i] == 'N')
+			{
+				data->xpos = i;
+				data->ypos = j;				
+			}
+			i++;
+		}
+		j++;
+	}
+
+}
 
 void	window(t_cub *data)
 {
@@ -34,9 +62,9 @@ void	window(t_cub *data)
 		j++;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, i * 50, j * 50, "Cub3d!");
+	player_pos(data);
 	render_map(data);
-	// mlx_key_hook(mlx_win, keys, data);
-
+	mlx_key_hook(data->mlx_win, key_handler, data);
 	// mlx_hook(mlx_win, 17, 0L, mouse, mlx);
 	mlx_loop(data->mlx);
 }
