@@ -33,6 +33,7 @@ char	**read_map(int i)
 // 	render_line(data, data->xpos * 50, data->ypos * 50, (data->xpos*50) + 50, (data->ypos*50) + 50, 0x);
 // }
 
+
 int key_handler(int key, t_cub *data)
 {
 	if(key == KEY_UP)
@@ -43,11 +44,9 @@ int key_handler(int key, t_cub *data)
 		data->side = 1;
 	else if(key == KEY_LEFT)
 		data->side = -1;
-		
-		// render_line(data, data->xpos * 50 , data->ypos * 50, ((data->xpos + cos(data->rotation_angle)) * 50), ((data->ypos + sin(data->rotation_angle)) *50 ),0x000000);
 	data->rotation_angle += data->side * data->rotation_speed;
+	render_map(data);
 	render_line(data, data->xpos * 50 , data->ypos * 50, ((data->xpos + cos(data->rotation_angle)) * 50), ((data->ypos + sin(data->rotation_angle)) *50 ), 0xFFFFFF);
-
 	return (0);	
 }
 
@@ -80,6 +79,7 @@ void	window(t_cub *data)
 {
 	int	i;
 	int	j;
+	void *image;
 
 	j = 0;
 	i = ft_strlen(data->map[0]);
@@ -87,11 +87,12 @@ void	window(t_cub *data)
 		j++;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, i * 50, j * 50, "Cub3d!");
+	image = mlx_new_image(data->mlx, 640, 360);
 	player_pos(data);
 	render_map(data);
-	render_player(data, 3);
 	// render_line(data, data->xpos * 50 , data->ypos * 50, ((data->xpos + cos(data->rotation_angle)) * 50), ((data->ypos + sin(data->rotation_angle)) *50 ), 0xFFFFFF);
-	mlx_key_hook(data->mlx_win, key_handler, data);
+	// mlx_key_hook(data->mlx_win, key_handler, data);
+	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
 	// mlx_hook(mlx_win, 17, 0L, mouse, mlx);
 	mlx_loop(data->mlx);
 }

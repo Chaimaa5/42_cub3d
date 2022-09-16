@@ -52,6 +52,7 @@ void	render_map(t_cub *data)
 {
 	int i;
 	int j = 0;
+
 	while(data->map[j])
 	{
 		i = 0;
@@ -59,8 +60,11 @@ void	render_map(t_cub *data)
 		{
 			if(data->map[j][i] == '1')
 				render_square(data, i * 50, j * 50, 0xFFFFFF);
+			else if(data->map[j][i])
+				render_square(data, i * 50, j * 50, 0x000000);
 			i++;
 		}
 		j++;
 	}
+	render_player(data, 3);
 }
