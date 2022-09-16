@@ -22,17 +22,6 @@ char	**read_map(int i)
 	return (p);
 }
 
-// void	rotate(t_cub *data, double angle)
-// {
-// 	double tmp;
-// 	// render_square(data, data->xpos * 50, data->ypos * 50, 0x050505);
-// 	tmp = ((data->xpos * cos(angle)) - (data->ypos * sin(angle)));
-// 	data->ypos = ((data->xpos * sin(angle)) + (data->ypos * cos(angle)));
-// 	data->xpos = tmp;
-// 	render_player(data, 3);
-// 	render_line(data, data->xpos * 50, data->ypos * 50, (data->xpos*50) + 50, (data->ypos*50) + 50, 0x);
-// }
-
 
 int key_handler(int key, t_cub *data)
 {
@@ -46,7 +35,12 @@ int key_handler(int key, t_cub *data)
 		data->side = -1;
 	data->rotation_angle += data->side * data->rotation_speed;
 	render_map(data);
-	render_line(data, data->xpos * 50 , data->ypos * 50, ((data->xpos + cos(data->rotation_angle)) * 50), ((data->ypos + sin(data->rotation_angle)) *50 ), 0xFFFFFF);
+	int i = 0;
+	while (i < 50)
+	{
+		render_line(data, data->xpos * i , data->ypos * i, ((data->xpos + cos(data->rotation_angle)) * i), ((data->ypos + sin(data->rotation_angle)) * i ), 0xFFFFFF);
+		i++;
+	}
 	return (0);	
 }
 
