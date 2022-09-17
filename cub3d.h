@@ -14,17 +14,19 @@ typedef struct s_cub{
     void	*mlx;
     void	*mlx_win;
     char	**map;
-    int     xpos;
-    int     ypos;
-	int		side;
-	int		walk;
+    double  xpos;
+    double  ypos;
+	double	side;
+	double	walk;
     double	rotation_angle;
 	double	move_speed;
 	double	rotation_speed;
+    double  move_step;
+    char    direction;
 }   t_cub;
 
 
-void	render_line(t_cub *data, int beginX, int beginY, int endX, int endY, int color);
+void	render_line(t_cub *data, int color);
 void	render_player(t_cub *data, int r);
 void	render_square(t_cub *data, int x, int y, int color);
 void	render_map(t_cub *data);

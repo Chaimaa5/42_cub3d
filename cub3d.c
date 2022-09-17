@@ -23,25 +23,65 @@ char	**read_map(int i)
 }
 
 
+int check_wall(t_cub *data)
+{
+	int i;
+	int j;
+	
+	i = data->xpos + cos(data->rotation_angle) * ((data->move_step) * 2);
+	j = data->ypos + sin(data->rotation_angle) * ((data->move_step) * 2);
+	if(data->map[j / 50][i / 50] == '1')
+		return(0);
+	return(1);
+
+}
+
 int key_handler(int key, t_cub *data)
 {
 	if(key == KEY_UP)
-		data->walk = 1;
-	else if(key == KEY_DOWN)
-		data->walk = -1;
-	else if(key == KEY_RIGHT)
-		data->side = 1;
-	else if(key == KEY_LEFT)
-		data->side = -1;
-	data->rotation_angle += data->side * data->rotation_speed;
-	render_map(data);
-	int i = 0;
-	while (i < 50)
 	{
-		render_line(data, data->xpos * i , data->ypos * i, ((data->xpos + cos(data->rotation_angle)) * i), ((data->ypos + sin(data->rotation_angle)) * i ), 0xFFFFFF);
-		i++;
+		data->walk = 1;
+		data->move_step = data->walk * data->move_speed;
+		if (check_wall(data))
+		{
+			data->xpos += cos(data->rotation_angle) * data->move_step;
+			data->ypos += sin(data->rotation_angle) * data->move_step;
+			render_map(data);
+		}
+	}
+	else if(key == KEY_DOWN)
+	{
+		data->walk = -1;
+		data->move_step = data->walk * data->move_speed;
+		if (check_wall(data))
+		{
+			data->xpos += cos(data->rotation_angle) * data->move_step;
+			data->ypos += sin(data->rotation_angle) * data->move_step;
+			render_map(data);
+		}
+	}
+	else if(key == KEY_RIGHT)
+	{
+		data->side = 1;
+		data->rotation_angle += data->side * data->rotation_speed;
+		render_map(data);
+	}
+	else if(key == KEY_LEFT)
+	{
+		data->side = -1;
+		data->rotation_angle += data->side * data->rotation_speed;
+		render_map(data);
 	}
 	return (0);	
+}
+
+void player_init(t_cub *data)
+{
+	data->side = 0;
+	data->walk = 0;
+	data->move_speed = 7;
+	data->rotation_angle = PI / 2;
+	data->rotation_speed = 5 * (PI / 180);
 }
 
 void player_pos(t_cub *data)
@@ -49,11 +89,7 @@ void player_pos(t_cub *data)
 	int i;
 	int j;
 	j = 0;
-	data->side = 0;
-	data->walk = 0;
-	data->move_speed = 2.0;
-	data->rotation_angle = PI / 2;
-	data->rotation_speed = 2 * (PI / 180);
+	player_init(data);
 	while (data->map[j])
 	{
 		i = 0;
@@ -61,8 +97,9 @@ void player_pos(t_cub *data)
 		{
 			if (data->map[j][i] == 'N')
 			{
-				data->xpos = i;
-				data->ypos = j;				
+				data->map[j][i] = '0';
+				data->xpos = i * 50;
+				data->ypos = j * 50;				
 			}
 			i++;
 		}
@@ -73,7 +110,7 @@ void	window(t_cub *data)
 {
 	int	i;
 	int	j;
-	void *image;
+	//void *image;
 
 	j = 0;
 	i = ft_strlen(data->map[0]);
@@ -81,13 +118,10 @@ void	window(t_cub *data)
 		j++;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, i * 50, j * 50, "Cub3d!");
-	image = mlx_new_image(data->mlx, 640, 360);
+	//image = mlx_new_image(data->mlx, 640, 360);
 	player_pos(data);
 	render_map(data);
-	// render_line(data, data->xpos * 50 , data->ypos * 50, ((data->xpos + cos(data->rotation_angle)) * 50), ((data->ypos + sin(data->rotation_angle)) *50 ), 0xFFFFFF);
-	// mlx_key_hook(data->mlx_win, key_handler, data);
 	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
-	// mlx_hook(mlx_win, 17, 0L, mouse, mlx);
 	mlx_loop(data->mlx);
 }
 
