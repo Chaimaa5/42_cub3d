@@ -1,23 +1,29 @@
 #include "cub3d.h"
 
-void	render_line(t_cub *data, int color)
+int line_length(t_cub *data, double x, double y)
 {
-	double deltaX;
-	double deltaY;
+	
+	if(data->map[(int)y / 50][(int)x / 50] == '1')
+		return(0);
+	return(1);
+}
+
+void	render_line(t_cub *data, double deltaX, double deltaY, int color)
+{
+
 	double pixelX = data->xpos;
 	double pixelY = data->ypos;
 	
-	deltaX = (data->xpos + cos(data->rotation_angle) * 20) - data->xpos;
-	deltaY = (data->ypos + sin(data->rotation_angle) * 20) - data->ypos;
+	// deltaX = (data->xpos + cos(data->rotation_angle) * 1000) - data->xpos;
+	// deltadY = (data->ypos + sin(data->rotation_angle) * 1000) - data->ypos;
 	int pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
 	deltaX /= pixels;
 	deltaY /= pixels;
-	while (pixels)
-	{
+	while (line_length(data, pixelX, pixelY))
+	{		
 	    mlx_pixel_put(data->mlx, data->mlx_win, pixelX, pixelY, color);
 	    pixelX += deltaX;
 	    pixelY += deltaY;
-	    --pixels;
 	}
 }
 
@@ -62,12 +68,16 @@ void	render_map(t_cub *data)
 				render_square(data, i * 50, j * 50, 0xFFFFFF);
 			else if(data->map[j][i] == '0')
 				render_square(data, i * 50, j * 50, 0x000000);
-			if(data->map[j][i] == 'N' || data->map[j][i] == 'W' || data->map[j][i] == 'S' || data->map[j][i] == 'E')
-				data->direction = data->map[j][i];
 			i++;
 		}
 		j++;
 	}
-	render_line(data, 0x40E0D0);
+	double x = -30;
+	double l = data->rotation_angle;
+	while (x < 30)
+	{
+		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
+		x += 1;
+	}
 	render_player(data, 5);
 }
