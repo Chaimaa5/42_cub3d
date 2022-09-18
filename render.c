@@ -21,7 +21,7 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 	deltaY /= pixels;
 	while (line_length(data, pixelX, pixelY))
 	{		
-	    pixel_put(data->img.mlx_img, pixelX, pixelY, color);
+	    pixel_put(&data->img, pixelX, pixelY, color);
 	    pixelX += deltaX;
 	    pixelY += deltaY;
 	}
@@ -38,7 +38,7 @@ void	render_player(t_cub *data, int r)
 	{
 		x1 = r * cos(angle * PI / 180);
 		y1 = r * sin(angle * PI / 180);
-		pixel_put(data->img.mlx_img, (data->xpos) + x1, (data->ypos) + y1, 0x40E0D0);
+		pixel_put(&data->img, (data->xpos) + x1, (data->ypos) + y1, 0x40E0D0);
 		angle += 0.1;
 	}
 }
@@ -55,11 +55,10 @@ void	render_square(t_cub *data, int x, int y, int color)
 		j = 0;
 		while (j < 50)
 		{
-			pixel_put(data->img.mlx_img, x + j, y + i, color);
+			pixel_put(&data->img, x + j, y + i, color);
 			j++;
 		}
 		i++;
-			printf("here\n");
 	}
 }
 
@@ -73,7 +72,7 @@ void	render_fov(t_cub *data)
 	while (x < PI / 6)
 	{
 		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
-		x += 0.0174533;
+		x += 0.005;
 		// x += 0.1;
 	}
 	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080);
@@ -100,4 +99,5 @@ void	render_map(t_cub *data)
 	}
 	render_fov(data);
 	render_player(data, 5);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.mlx_img, 0, 0);
 }

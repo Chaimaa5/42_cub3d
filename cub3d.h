@@ -19,7 +19,8 @@ typedef struct   s_img{
     int     bpp;
     int     line;
 }   t_img;
-
+double g_i;
+double g_j;
 typedef struct s_cub{
     void	*mlx;
     void	*mlx_win;

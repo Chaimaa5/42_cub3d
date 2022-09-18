@@ -86,7 +86,8 @@ void player_pos(t_cub *data)
 		i = 0;
 		while (data->map[j][i])
 		{
-			if (data->map[j][i] == 'N' || data->map[j][i] == 'E' || data->map[j][i] == 'S' || data->map[j][i] == 'W')
+			if (data->map[j][i] == 'N' || data->map[j][i] == 'E'
+				|| data->map[j][i] == 'S' || data->map[j][i] == 'W')
 			{
 				data->map[j][i] = '0';
 				data->xpos = i * 50;
@@ -101,29 +102,26 @@ void player_pos(t_cub *data)
 void	pixel_put(t_img *data, int x, int y, int color)
 {
 	char	*dst;
-
-	   printf("%d  -- %d ---- %d ----\n", data->line, data->bpp, data->endian);
 	dst = data->addr + (y * data->line + x * (data->bpp / 8));
-	*(unsigned int*)dst = color;
+	*(int*)dst = color;
 }
 
 void	window(t_cub *data)
 {
-	// int		i;
-	// int		j;
-	// j = 0;
-	// i = ft_strlen(data->map[0]);
-	// while (data->map[j])
-	// 	j++;
+	int		i;
+	int		j;
+	j = 0;
+	i = ft_strlen(data->map[0]);
+	while (data->map[j])
+		j++;
 	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, 200, 100, "Cub3d!");
-	data->img.mlx_img = mlx_new_image(data->mlx, 200, 100);
-	data->img.addr  = mlx_get_data_addr(data->mlx, &data->img.bpp, &data->img.line, &data->img.endian);
-	// player_pos(data);
-	// render_map(data);
-	pixel_put(&data->img, 5, 5, 0x40E0D0);
+	data->mlx_win = mlx_new_window(data->mlx, i * 50, j * 50, "Cub3d!");
+	data->img.mlx_img = mlx_new_image(data->mlx, i * 50, j * 50);
+	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line, &data->img.endian);
+	player_pos(data);
+	render_map(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.mlx_img, 0, 0);
-	// mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
+	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
 	mlx_loop(data->mlx);
 }
 
