@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int check_wall(t_cub *data)
+int check_wall_collision(t_cub *data)
 {
 	int i;
 	int j;
@@ -10,6 +10,25 @@ int check_wall(t_cub *data)
 	if(data->map[j / 50][i / 50] == '1')
 		return(0);
 	return(1);
+}
+
+int	check_wall(char **map)
+{
+	int	i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+			j++;
+		if (map[i][0] != '1' || map[i][j - 1] != '1')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	check_elements(char **map)
@@ -36,7 +55,7 @@ int	check_elements(char **map)
 
 void	check_map(char **map)
 {
-	if (!check_elements(map))
+	if (check_elements(map) || check_wall(map))
 	{
 		write(2, "not valid\n", 11);
 		exit(0);

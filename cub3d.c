@@ -6,7 +6,7 @@ int key_handler(int key, t_cub *data)
 	{
 		data->walk = 1;
 		data->move_step = data->walk * data->move_speed;
-		if (check_wall(data))
+		if (check_wall_collision(data))
 		{
 			data->xpos += cos(data->rotation_angle) * data->move_step;
 			data->ypos += sin(data->rotation_angle) * data->move_step;
@@ -17,7 +17,7 @@ int key_handler(int key, t_cub *data)
 	{
 		data->walk = -1;
 		data->move_step = data->walk * data->move_speed;
-		if (check_wall(data))
+		if (check_wall_collision(data))
 		{
 			data->xpos += cos(data->rotation_angle) * data->move_step;
 			data->ypos += sin(data->rotation_angle) * data->move_step;
@@ -99,8 +99,9 @@ void player_pos(t_cub *data)
 }
 void	window(t_cub *data)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	void	*img;
 
 	j = 0;
 	i = ft_strlen(data->map[0]);
@@ -108,6 +109,7 @@ void	window(t_cub *data)
 		j++;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, i * 50, j * 50, "Cub3d!");
+	img = mlx_new_image(data->mlx, i * 50, j * 50);
 	player_pos(data);
 	render_map(data);
 	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
@@ -124,6 +126,6 @@ int main(int ac, char **av)
 		fd = open(av[1], O_RDONLY);
 		data.map = read_map(fd);
 		check_map(data.map);
-			window(&data);
+		window(&data);
 	}
 }

@@ -35,6 +35,6 @@ void	render_map(t_cub *data);
 char	**read_map(int i);
 int     check_elements(char **map);
 void	check_map(char **map);
-int     check_wall(t_cub *data);
+int     check_wall_collision(t_cub *data);
 
 #endif
