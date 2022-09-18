@@ -97,22 +97,33 @@ void player_pos(t_cub *data)
 		j++;
 	}
 }
+
+void	pixel_put(t_img *data, int x, int y, int color)
+{
+	char	*dst;
+
+	   printf("%d  -- %d ---- %d ----\n", data->line, data->bpp, data->endian);
+	dst = data->addr + (y * data->line + x * (data->bpp / 8));
+	*(unsigned int*)dst = color;
+}
+
 void	window(t_cub *data)
 {
-	int		i;
-	int		j;
-	void	*img;
-
-	j = 0;
-	i = ft_strlen(data->map[0]);
-	while (data->map[j])
-		j++;
+	// int		i;
+	// int		j;
+	// j = 0;
+	// i = ft_strlen(data->map[0]);
+	// while (data->map[j])
+	// 	j++;
 	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, i * 50, j * 50, "Cub3d!");
-	img = mlx_new_image(data->mlx, i * 50, j * 50);
-	player_pos(data);
-	render_map(data);
-	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
+	data->mlx_win = mlx_new_window(data->mlx, 200, 100, "Cub3d!");
+	data->img.mlx_img = mlx_new_image(data->mlx, 200, 100);
+	data->img.addr  = mlx_get_data_addr(data->mlx, &data->img.bpp, &data->img.line, &data->img.endian);
+	// player_pos(data);
+	// render_map(data);
+	pixel_put(&data->img, 5, 5, 0x40E0D0);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.mlx_img, 0, 0);
+	// mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
 	mlx_loop(data->mlx);
 }
 

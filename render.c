@@ -21,7 +21,7 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 	deltaY /= pixels;
 	while (line_length(data, pixelX, pixelY))
 	{		
-	    mlx_pixel_put(data->mlx, data->mlx_win, pixelX, pixelY, color);
+	    pixel_put(data->img.mlx_img, pixelX, pixelY, color);
 	    pixelX += deltaX;
 	    pixelY += deltaY;
 	}
@@ -38,7 +38,7 @@ void	render_player(t_cub *data, int r)
 	{
 		x1 = r * cos(angle * PI / 180);
 		y1 = r * sin(angle * PI / 180);
-		mlx_pixel_put(data->mlx, data->mlx_win, (data->xpos) + x1, (data->ypos) + y1, 0x40E0D0);
+		pixel_put(data->img.mlx_img, (data->xpos) + x1, (data->ypos) + y1, 0x40E0D0);
 		angle += 0.1;
 	}
 }
@@ -55,10 +55,11 @@ void	render_square(t_cub *data, int x, int y, int color)
 		j = 0;
 		while (j < 50)
 		{
-			mlx_pixel_put(data->mlx, data->mlx_win, x + j, y + i, color);
+			pixel_put(data->img.mlx_img, x + j, y + i, color);
 			j++;
 		}
 		i++;
+			printf("here\n");
 	}
 }
 

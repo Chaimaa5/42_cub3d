@@ -12,6 +12,14 @@
 #define PI 3.1415926535
 #define PI2 1.5708 //pi/2
 #define PI3 4.71239 //3pi/2
+typedef struct   s_img{
+    void    *mlx_img;
+    char    *addr;
+    int     endian;
+    int     bpp;
+    int     line;
+}   t_img;
+
 typedef struct s_cub{
     void	*mlx;
     void	*mlx_win;
@@ -25,6 +33,7 @@ typedef struct s_cub{
 	double	rotation_speed;
     double  move_step;
     char    direction;
+    t_img   img;
 }   t_cub;
 
 
@@ -36,5 +45,7 @@ char	**read_map(int i);
 int     check_elements(char **map);
 void	check_map(char **map);
 int     check_wall_collision(t_cub *data);
+void	pixel_put(t_img *img, int x, int y, int color);
+
 
 #endif
