@@ -54,6 +54,18 @@ void	render_square(t_cub *data, int x, int y, int color)
 	}
 }
 
+void	render_fov(t_cub *data)
+{
+	double x = -PI / 9;
+	double l = data->rotation_angle;
+	while (x < PI / 9)
+	{
+		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
+		x += 0.01;
+	}
+	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080);
+}
+
 void	render_map(t_cub *data)
 {
 	int i;
@@ -72,12 +84,6 @@ void	render_map(t_cub *data)
 		}
 		j++;
 	}
-	double x = -30;
-	double l = data->rotation_angle;
-	while (x < 30)
-	{
-		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
-		x += 1;
-	}
+	render_fov(data);
 	render_player(data, 5);
 }
