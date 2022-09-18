@@ -1,44 +1,8 @@
 #include "cub3d.h"
 
-char	**read_map(int i)
-{
-	char	*map;
-	char	*mapp;
-	char	**p;
-	int		y;
-
-	y = 0;
-	mapp = ft_strdup("");
-	map = get_next_line(i);
-	while (map)
-	{
-		mapp = ft_strjoin(mapp, map);
-		free(map);
-		map = get_next_line(i);
-		y++;
-	}
-	p = ft_split(mapp, '\n');
-	free(mapp);
-	return (p);
-}
-
-
-int check_wall(t_cub *data)
-{
-	int i;
-	int j;
-	
-	i = data->xpos + cos(data->rotation_angle) * data->move_step;
-	j = data->ypos + sin(data->rotation_angle) * data->move_step;
-	if(data->map[j / 50][i / 50] == '1')
-		return(0);
-	return(1);
-
-}
-
 int key_handler(int key, t_cub *data)
 {
-	if(key == KEY_UP)
+	if (key == KEY_UP)
 	{
 		data->walk = 1;
 		data->move_step = data->walk * data->move_speed;
@@ -49,7 +13,7 @@ int key_handler(int key, t_cub *data)
 			render_map(data);
 		}
 	}
-	else if(key == KEY_DOWN)
+	else if (key == KEY_DOWN)
 	{
 		data->walk = -1;
 		data->move_step = data->walk * data->move_speed;
@@ -60,13 +24,13 @@ int key_handler(int key, t_cub *data)
 			render_map(data);
 		}
 	}
-	else if(key == KEY_RIGHT)
+	else if (key == KEY_RIGHT)
 	{
 		data->side = 1;
 		data->rotation_angle += data->side * data->rotation_speed;
 		render_map(data);
 	}
-	else if(key == KEY_LEFT)
+	else if (key == KEY_LEFT)
 	{
 		data->side = -1;
 		data->rotation_angle += data->side * data->rotation_speed;
@@ -87,7 +51,7 @@ double check_direction(t_cub *data)
 		i = 0;
 		while(data->map[j][i])
 		{
-			if(data->map[j][i] == 'N')
+			if (data->map[j][i] == 'N')
 				return (PI / 2);
 			else if (data->map[j][i] == 'W')
 				return (PI);
@@ -137,7 +101,6 @@ void	window(t_cub *data)
 {
 	int	i;
 	int	j;
-	//void *image;
 
 	j = 0;
 	i = ft_strlen(data->map[0]);
@@ -145,7 +108,6 @@ void	window(t_cub *data)
 		j++;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, i * 50, j * 50, "Cub3d!");
-	//image = mlx_new_image(data->mlx, 640, 360);
 	player_pos(data);
 	render_map(data);
 	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
@@ -161,6 +123,7 @@ int main(int ac, char **av)
 	{
 		fd = open(av[1], O_RDONLY);
 		data.map = read_map(fd);
-		window(&data);
+		check_map(data.map);
+			window(&data);
 	}
 }

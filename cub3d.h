@@ -32,5 +32,9 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color);
 void	render_player(t_cub *data, int r);
 void	render_square(t_cub *data, int x, int y, int color);
 void	render_map(t_cub *data);
+char	**read_map(int i);
+int     check_elements(char **map);
+void	check_map(char **map);
+int     check_wall(t_cub *data);
 
 #endif
