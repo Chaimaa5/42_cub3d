@@ -7,7 +7,7 @@ int check_wall_collision(t_cub *data)
 	
 	i = data->xpos + cos(data->rotation_angle) * data->move_step;
 	j = data->ypos + sin(data->rotation_angle) * data->move_step;
-	if(data->map[j / 50][i / 50] == '1')
+	if(data->map[j / (int)g_j][i / (int)g_i] == '1')
 		return(0);
 	return(1);
 }

@@ -90,8 +90,8 @@ void player_pos(t_cub *data)
 				|| data->map[j][i] == 'S' || data->map[j][i] == 'W')
 			{
 				data->map[j][i] = '0';
-				data->xpos = i * 50;
-				data->ypos = j * 50;				
+				data->xpos = i * g_i;
+				data->ypos = j * g_j;				
 			}
 			i++;
 		}
@@ -110,13 +110,16 @@ void	window(t_cub *data)
 {
 	int		i;
 	int		j;
+
 	j = 0;
 	i = ft_strlen(data->map[0]);
 	while (data->map[j])
 		j++;
+	g_i = 1680 / i;
+	g_j = 1080 / j;
 	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, i * 50, j * 50, "Cub3d!");
-	data->img.mlx_img = mlx_new_image(data->mlx, i * 50, j * 50);
+	data->mlx_win = mlx_new_window(data->mlx, i * g_i, j * g_j, "Cub3d!");
+	data->img.mlx_img = mlx_new_image(data->mlx,i * g_i, j * g_j);
 	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line, &data->img.endian);
 	player_pos(data);
 	render_map(data);

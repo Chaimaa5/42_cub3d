@@ -2,7 +2,7 @@
 
 int line_length(t_cub *data, double x, double y)
 {
-	if (data->map[(int)y / 50][(int)x / 50] == '1')
+	if (data->map[(int)y / (int)g_j][(int)x / (int)g_i] == '1')
 		return(0);
 	return(1);
 }
@@ -20,7 +20,7 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 	deltaX /= pixels;
 	deltaY /= pixels;
 	while (line_length(data, pixelX, pixelY))
-	{		
+	{	
 	    pixel_put(&data->img, pixelX, pixelY, color);
 	    pixelX += deltaX;
 	    pixelY += deltaY;
@@ -50,10 +50,10 @@ void	render_square(t_cub *data, int x, int y, int color)
 
 	i = 0;
 	j = 0;
-	while(i < 50)
+	while(i < g_j)
 	{
 		j = 0;
-		while (j < 50)
+		while (j < g_i)
 		{
 			pixel_put(&data->img, x + j, y + i, color);
 			j++;
@@ -90,9 +90,9 @@ void	render_map(t_cub *data)
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == '1')
-				render_square(data, i * 50, j * 50, 0xFFFFFF);
+				render_square(data, i * g_i, j * g_j, 0xFFFFFF);
 			else if (data->map[j][i] == '0')
-				render_square(data, i * 50, j * 50, 0x000000);
+				render_square(data, i * g_i, j * g_j, 0x000000);
 			i++;
 		}
 		j++;

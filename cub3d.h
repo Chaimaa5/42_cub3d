@@ -12,6 +12,8 @@
 #define PI 3.1415926535
 #define PI2 1.5708 //pi/2
 #define PI3 4.71239 //3pi/2
+#define WINDOW_WIDTH 1980
+#define WINDOW_HEIGHT 1200
 typedef struct   s_img{
     void    *mlx_img;
     char    *addr;
@@ -19,6 +21,7 @@ typedef struct   s_img{
     int     bpp;
     int     line;
 }   t_img;
+
 double g_i;
 double g_j;
 typedef struct s_cub{
