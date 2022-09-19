@@ -115,10 +115,18 @@ void	window(t_cub *data)
 	i = ft_strlen(data->map[0]);
 	while (data->map[j])
 		j++;
-	g_i = 1680 / i;
-	g_j = 1080 / j;
+	if(i > j)
+	{
+		g_i = 500 / i;
+		g_j = 500 / i;
+	}
+	else
+	{
+		g_i = 500 / j;
+		g_j = 500 / j;
+	}
 	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, i * g_i, j * g_j, "Cub3d!");
+	data->mlx_win = mlx_new_window(data->mlx, 1680, 1080, "Cub3d!");
 	data->img.mlx_img = mlx_new_image(data->mlx,i * g_i, j * g_j);
 	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line, &data->img.endian);
 	player_pos(data);

@@ -17,6 +17,7 @@ $(NAME): $(OBJ)
 	make -C $(LIBF_DIR)
 	cp inc/libft/libft.a .
 	$(CC) $(FLAGS) -fsanitize=address -g $(OBJ) $(LIBFT)  $(INC) -o $(NAME)
+	rm -f $(OBJ)
 
 all : $(NAME) 
 

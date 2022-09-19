@@ -4,6 +4,8 @@ int line_length(t_cub *data, double x, double y)
 {
 	if (data->map[(int)y / (int)g_j][(int)x / (int)g_i] == '1')
 		return(0);
+	if (data->map[(int)y / (int)g_j][(int)x / (int)g_i] == ' ')
+		return(0);
 	return(1);
 }
 
@@ -73,7 +75,6 @@ void	render_fov(t_cub *data)
 	{
 		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
 		x += 0.005;
-		// x += 0.1;
 	}
 	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080);
 }
@@ -89,7 +90,7 @@ void	render_map(t_cub *data)
 		i = 0;
 		while (data->map[j][i])
 		{
-			if (data->map[j][i] == '1')
+			if (data->map[j][i] == '1' || data->map[j][i] == ' ')
 				render_square(data, i * g_i, j * g_j, 0xFFFFFF);
 			else if (data->map[j][i] == '0')
 				render_square(data, i * g_i, j * g_j, 0x000000);
