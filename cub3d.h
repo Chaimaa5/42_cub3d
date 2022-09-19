@@ -12,8 +12,8 @@
 #define PI 3.1415926535
 #define PI2 1.5708 //pi/2
 #define PI3 4.71239 //3pi/2
-#define WINDOW_WIDTH 1980
-#define WINDOW_HEIGHT 1200
+#define WINDOW_WIDTH 1080
+#define WINDOW_HEIGHT 720
 typedef struct   s_img{
     void    *mlx_img;
     char    *addr;
@@ -37,7 +37,14 @@ typedef struct s_cub{
 	double	rotation_speed;
     double  move_step;
     char    direction;
+    double  wall_size;
+    double  wall_height;
+    double dis;
+    double wall;
+    int     i_2D;
+    int     j_2D;
     t_img   img;
+    t_img   img_3D;
 }   t_cub;
 
 
@@ -50,6 +57,9 @@ int     check_elements(char **map);
 void	check_map(char **map);
 int     check_wall_collision(t_cub *data);
 void	pixel_put(t_img *img, int x, int y, int color);
-
+void    wall_projection(t_cub *data);
+void	render_2D_map(t_cub *data);
+void player_pos(t_cub *data);
+int check_wall_collision_2D(t_cub *data);
 
 #endif

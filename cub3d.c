@@ -6,35 +6,39 @@ int key_handler(int key, t_cub *data)
 	{
 		data->walk = 1;
 		data->move_step = data->walk * data->move_speed;
-		if (check_wall_collision(data))
+		if (check_wall_collision(data) && check_wall_collision_2D(data))
 		{
 			data->xpos += cos(data->rotation_angle) * data->move_step;
 			data->ypos += sin(data->rotation_angle) * data->move_step;
-			render_map(data);
+			// render_map(data);
+			render_2D_map(data);
 		}
 	}
 	else if (key == KEY_DOWN)
 	{
 		data->walk = -1;
 		data->move_step = data->walk * data->move_speed;
-		if (check_wall_collision(data))
+		if (check_wall_collision(data) && check_wall_collision_2D(data))
 		{
 			data->xpos += cos(data->rotation_angle) * data->move_step;
 			data->ypos += sin(data->rotation_angle) * data->move_step;
-			render_map(data);
+			// render_map(data);
+			render_2D_map(data);
 		}
 	}
 	else if (key == KEY_RIGHT)
 	{
 		data->side = 1;
 		data->rotation_angle += data->side * data->rotation_speed;
-		render_map(data);
+		// render_map(data);
+		render_2D_map(data);
 	}
 	else if (key == KEY_LEFT)
 	{
 		data->side = -1;
 		data->rotation_angle += data->side * data->rotation_speed;
-		render_map(data);
+		// render_map(data);
+		render_2D_map(data);
 	}
 	return (0);	
 }
@@ -99,6 +103,30 @@ void player_pos(t_cub *data)
 	}
 }
 
+void player_pos_2D(t_cub *data)
+{
+	int i;
+	int j;
+	j = 0;
+	player_init(data);
+	while (data->map[j])
+	{
+		i = 0;
+		while (data->map[j][i])
+		{
+			if (data->map[j][i] == 'N' || data->map[j][i] == 'E'
+				|| data->map[j][i] == 'S' || data->map[j][i] == 'W')
+			{
+				data->map[j][i] = '0';
+				data->xpos = i * data->i_2D;
+				data->ypos = j * data->i_2D;				
+			}
+			i++;
+		}
+		j++;
+	}
+}
+
 void	pixel_put(t_img *data, int x, int y, int color)
 {
 	char	*dst;
@@ -115,23 +143,18 @@ void	window(t_cub *data)
 	i = ft_strlen(data->map[0]);
 	while (data->map[j])
 		j++;
-	if(i > j)
-	{
-		g_i = 500 / i;
-		g_j = 500 / i;
-	}
-	else
-	{
-		g_i = 500 / j;
-		g_j = 500 / j;
-	}
+	g_i = 1080 / i;
+	g_j = 1080 / i;
+	data->i_2D = 500 / i;
 	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, 1680, 1080, "Cub3d!");
-	data->img.mlx_img = mlx_new_image(data->mlx,i * g_i, j * g_j);
+	data->mlx_win = mlx_new_window(data->mlx, 1080, 720, "Cub3d!");
+	data->img.mlx_img = mlx_new_image(data->mlx, data->i_2D * i, data->i_2D * j);
+	data->img_3D.mlx_img = mlx_new_image(data->mlx, 1080, 720);
+	data->img_3D.addr = mlx_get_data_addr(data->img_3D.mlx_img, &data->img_3D.bpp, &data->img_3D.line, &data->img_3D.endian);
 	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line, &data->img.endian);
-	player_pos(data);
+	player_pos_2D(data);
 	render_map(data);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.mlx_img, 0, 0);
+	render_2D_map(data);
 	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
 	mlx_loop(data->mlx);
 }

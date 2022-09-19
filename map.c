@@ -1,9 +1,4 @@
 #include "cub3d.h"
-//check texture elements
-
-//check colors
-
-//check map
 
 int check_wall_collision(t_cub *data)
 {
@@ -12,26 +7,35 @@ int check_wall_collision(t_cub *data)
 	
 	i = data->xpos + cos(data->rotation_angle) * data->move_step;
 	j = data->ypos + sin(data->rotation_angle) * data->move_step;
-	if(data->map[j / (int)g_j][i / (int)g_i] == '1' || data->map[j / (int)g_j][i / (int)g_i] == ' ')
+	if(data->map[j / (int)g_j][i / (int)g_i] == '1')
 		return(0);
 	return(1);
 }
 
+int check_wall_collision_2D(t_cub *data)
+{
+	int i;
+	int j;
+	
+	i = data->xpos + cos(data->rotation_angle) * data->move_step;
+	j = data->ypos + sin(data->rotation_angle) * data->move_step;
+	if(data->map[j / data->i_2D][i / data->i_2D] == '1')
+		return(0);
+	return(1);
+}
 int	check_wall(char **map)
 {
 	int	i;
 	int j;
-	int len;
 
 	i = 0;
 	j = 0;
 	while (map[i])
 	{
 		j = 0;
-		len = ft_strlen(map[i]);
-		while (map[i][j] == ' ')
+		while (map[i][j])
 			j++;
-		if (map[i][j] != '1' || map[i][len - 1] != '1')
+		if (map[i][0] != '1' || map[i][j - 1] != '1')
 			return (1);
 		i++;
 	}

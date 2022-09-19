@@ -1,7 +1,7 @@
 NAME = cub3d
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror 
-SRCS = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c render.c map.c
+SRCS = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c render.c map.c raycasting.c
 INC = -lmlx -framework OpenGL -framework AppKit 
 
 LIBFT_A = libft.a
@@ -17,7 +17,6 @@ $(NAME): $(OBJ)
 	make -C $(LIBF_DIR)
 	cp inc/libft/libft.a .
 	$(CC) $(FLAGS) -fsanitize=address -g $(OBJ) $(LIBFT)  $(INC) -o $(NAME)
-	rm -f $(OBJ)
 
 all : $(NAME) 
 
