@@ -144,10 +144,10 @@ void	window(t_cub *data)
 	data->i_2D = 500 / i;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, 1080, 720, "Cub3d!");
-	data->img.mlx_img = mlx_new_image(data->mlx, data->i_2D * i, data->i_2D * j);
+	// data->img.mlx_img = mlx_new_image(data->mlx, data->i_2D * i, data->i_2D * j);
 	data->img_3D.mlx_img = mlx_new_image(data->mlx, 1080, 720);
 	data->img_3D.addr = mlx_get_data_addr(data->img_3D.mlx_img, &data->img_3D.bpp, &data->img_3D.line, &data->img_3D.endian);
-	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line, &data->img.endian);
+	// data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line, &data->img.endian);
 	player_pos_2D(data);
 	render_map(data);
 	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);

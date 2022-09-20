@@ -4,6 +4,9 @@ void    raycasting(t_cub *data)
 {
     int i = 0;
     int j;
+    double x  = -30;
+    while (x < PI / 6)
+	{
     while (i < WINDOW_WIDTH)
     {
         j = 0;
@@ -17,9 +20,7 @@ void    raycasting(t_cub *data)
         }
         i++;
     }
-}
-
-void    wall_projection(t_cub *data)
-{
-    raycasting(data);
+    x+= 0.05;
+    }
+    // mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
 }

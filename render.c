@@ -14,23 +14,22 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 	double	pixelX;
 	double	pixelY;
 	int		pixels;
-	(void)color;
+	// (void)color;
 	pixelX = data->xpos;
 	pixelY = data->ypos;
 	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
 	deltaX /= pixels;
 	deltaY /= pixels;
-	data->wall_size = (1080 / 2) / tan(30);
-	// data->wall_height = (g_i / pixels) * data->wall_size;
+	data->wall_height = (1080 / 2) / tan(30);
 	while (line_length(data, pixelX, pixelY))
 	{	
-	    pixel_put(&data->img, pixelX, pixelY, color);
+	    pixel_put(&data->img_3D, pixelX, pixelY, color);
 	    pixelX += deltaX;
 	    pixelY += deltaY;
 	}
-	data->dis = sqrt(pow(pixelX - data->xpos, 2) + pow(pixelY - data->ypos, 2));
-    data->wall = (g_i * WINDOW_HEIGHT) / data->dis;
-	// data->wall = (WINDOW_HEIGHT /  data->dis) * data->wall_size;
+	data->player_dis = sqrt(pow(data->xpos - pixelX , 2) + pow(data->ypos - pixelY, 2));
+    data->wall = (g_i * WINDOW_HEIGHT) / data->player_dis;
+	// data->wall = (WINDOW_HEIGHT /  data->player_dis) * data->wall_height;
 }
 
 
@@ -45,7 +44,7 @@ void	render_player(t_cub *data, int r)
 	{
 		x1 = r * cos(angle * PI / 180);
 		y1 = r * sin(angle * PI / 180);
-		pixel_put(&data->img, (data->xpos) + x1, (data->ypos) + y1, 0x40E0D0);
+		pixel_put(&data->img_3D, (data->xpos) + x1, (data->ypos) + y1, 0x40E0D0);
 		angle += 0.01;
 	}
 }
@@ -62,7 +61,7 @@ void	render_square(t_cub *data, int x, int y, int color)
 		j = 0;
 		while (j < data->i_2D)
 		{
-			pixel_put(&data->img, x + j, y + i, color);
+			pixel_put(&data->img_3D, x + j, y + i, color);
 			j++;
 		}
 		i++;
@@ -76,12 +75,11 @@ void	render_fov(t_cub *data)
 
 	x = -PI / 6;
 	l = data->rotation_angle;
-
 	while (x < PI / 6)
 	{
+		// raycasting(data);
 		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
-		wall_projection(data);
-		x += 0.005;
+		x += 0.05;
 	}
 	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080);
 }
@@ -92,6 +90,7 @@ void	render_map(t_cub *data)
 	int j;
 
 	j = 0;
+	raycasting(data);
 	while (data->map[j])
 	{
 		i = 0;
@@ -108,5 +107,4 @@ void	render_map(t_cub *data)
 	render_fov(data);
 	render_player(data, 5);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.mlx_img, 0, 0);
 }
