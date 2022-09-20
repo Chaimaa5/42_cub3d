@@ -12,7 +12,7 @@ void    raycasting(t_cub *data)
             if (j < (WINDOW_HEIGHT - data->wall)  / 2)
                 pixel_put(&data->img_3D, i, j, 0xFFFFFF);
             else
-                  pixel_put(&data->img_3D, i, j, 0xFFBFFF);
+                pixel_put(&data->img_3D, i, j, 0xFFBFFF);
             j++;
         }
         i++;

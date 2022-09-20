@@ -58,7 +58,7 @@ void	check_map(char **map);
 int     check_wall_collision(t_cub *data);
 void	pixel_put(t_img *img, int x, int y, int color);
 void    wall_projection(t_cub *data);
-void	render_2D_map(t_cub *data);
+// void	render_2D_map(t_cub *data);
 void player_pos(t_cub *data);
 int check_wall_collision_2D(t_cub *data);
 
