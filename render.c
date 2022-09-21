@@ -18,7 +18,6 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 	deltaX /= pixels;
 	deltaY /= pixels;
 	data->wall_height = (1080 / 2) / tan(30);
-		printf("%f====%f=\n", data->pixelX, data->pixelY);
 	while (line_length(data, data->pixelX, data->pixelY))
 	{	
 	    pixel_put(&data->img_3D, data->pixelX, data->pixelY, color);
