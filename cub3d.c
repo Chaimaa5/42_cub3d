@@ -70,9 +70,9 @@ void player_init(t_cub *data)
 {
 	data->side = 0;
 	data->walk = 0;
-	data->move_speed = 10;
+	data->move_speed = 5;
 	data->rotation_angle = check_direction(data);
-	data->rotation_speed = 10 * (PI / 180);
+	data->rotation_speed = 5 * (PI / 180);
 }
 
 void player_pos(t_cub *data)
@@ -90,8 +90,8 @@ void player_pos(t_cub *data)
 				|| data->map[j][i] == 'S' || data->map[j][i] == 'W')
 			{
 				data->map[j][i] = '0';
-				data->xpos = i * g_i;
-				data->ypos = j * g_j;				
+				data->xpos = i * data->i_2D;
+				data->ypos = j * data->i_2D;				
 			}
 			i++;
 		}

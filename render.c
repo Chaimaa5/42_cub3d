@@ -10,24 +10,22 @@ int line_length(t_cub *data, double x, double y)
 
 void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 {
-
-	double	pixelX;
-	double	pixelY;
 	int		pixels;
 	// (void)color;
-	pixelX = data->xpos;
-	pixelY = data->ypos;
+	data->pixelX = data->xpos;
+	data->pixelY = data->ypos;
 	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
 	deltaX /= pixels;
 	deltaY /= pixels;
 	data->wall_height = (1080 / 2) / tan(30);
-	while (line_length(data, pixelX, pixelY))
+		printf("%f====%f=\n", data->pixelX, data->pixelY);
+	while (line_length(data, data->pixelX, data->pixelY))
 	{	
-	    pixel_put(&data->img_3D, pixelX, pixelY, color);
-	    pixelX += deltaX;
-	    pixelY += deltaY;
+	    pixel_put(&data->img_3D, data->pixelX, data->pixelY, color);
+	    data->pixelX += deltaX;
+	    data->pixelY += deltaY;
 	}
-	data->player_dis = sqrt(pow(data->xpos - pixelX , 2) + pow(data->ypos - pixelY, 2));
+	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2));
     data->wall = (g_i * WINDOW_HEIGHT) / data->player_dis;
 	// data->wall = (WINDOW_HEIGHT /  data->player_dis) * data->wall_height;
 }
@@ -79,7 +77,7 @@ void	render_fov(t_cub *data)
 	{
 		// raycasting(data);
 		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
-		x += 0.05;
+		x += 0.001;
 	}
 	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080);
 }
@@ -97,7 +95,7 @@ void	render_map(t_cub *data)
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == '1')
-				render_square(data,  data->i_2D * i, data->i_2D  * j, 0xFFFFFF);
+				render_square(data,  data->i_2D * i, data->i_2D  * j, 0x000BB0);
 			else if (data->map[j][i] == '0')
 				render_square(data, data->i_2D * i, data->i_2D  * j, 0x000000);
 			i++;
@@ -107,4 +105,5 @@ void	render_map(t_cub *data)
 	render_fov(data);
 	render_player(data, 5);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
+	// mlx_destroy_image(data->mlx, data->img_3D.mlx_img);
 }

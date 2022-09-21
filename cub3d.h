@@ -43,6 +43,8 @@ typedef struct s_cub{
     int     i_2D;
     int     j_2D;
     t_img   img;
+    double  pixelX;
+    double  pixelY;
     t_img   img_3D;
 }   t_cub;
 
@@ -57,7 +59,6 @@ void	check_map(char **map);
 int     check_wall_collision(t_cub *data);
 void	pixel_put(t_img *img, int x, int y, int color);
 void    raycasting(t_cub *data);
-// void	render_2D_map(t_cub *data);
 void player_pos(t_cub *data);
 int check_wall_collision_2D(t_cub *data);
 
