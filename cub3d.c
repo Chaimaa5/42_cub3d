@@ -140,7 +140,7 @@ void	window(t_cub *data)
 	while (data->map[j])
 		j++;
 	g_i = 1080 / i;
-	g_j = 1080 / i;
+	g_j = 50;
 	data->i_2D = 500 / i;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, 1080, 720, "Cub3d!");

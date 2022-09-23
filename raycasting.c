@@ -1,12 +1,30 @@
 #include "cub3d.h"
 
+#include "cub3d.h"
+
+
+int direction(t_cub *data)
+{
+    int k;
+
+    if(data->map[(((int)data->pixelY + 1) / data->i_2D)][((int)data->pixelX / data->i_2D)] == '0')
+        k = 1;
+    if(data->map[((int)data->pixelY / data->i_2D)][(((int)data->pixelX + 1) / data->i_2D)] == '0')
+        k = 2;
+    if(data->map[(((int)data->pixelY - 1) / data->i_2D)][((int)data->pixelX / data->i_2D)] == '0')
+        k = 3;
+    if(data->map[((int)data->pixelY / data->i_2D)][(((int)data->pixelX - 1) / data->i_2D)] == '0')
+        k = 4;
+    return(k);
+}
+
+
 void    raycasting(t_cub *data)
 {
     int i = 0;
     int j;
     double x  = - PI / 6;
     double l = data->rotation_angle;
-
     while (i < WINDOW_WIDTH)
     {
         j = 0;
@@ -18,12 +36,14 @@ void    raycasting(t_cub *data)
                 pixel_put(&data->img_3D, i, j, 0xFFFFFF);
             else if (j < ((WINDOW_HEIGHT - data->wall)  / 2) + data->wall)
             {
-                if(data->pixelX < 0  && data->pixelY > 0)
-                    pixel_put(&data->img_3D, i, j, 0xFFBFFF);
-                else if(data->pixelX < 0  && data->pixelY < 0)
-                    pixel_put(&data->img_3D, i, j, 0xFFB0FF);
-                else
-                    pixel_put(&data->img_3D, i, j, 0xFFEEFF);
+                if (direction(data) == 1)
+                    pixel_put(&data->img_3D, i, j, 0xFF4FFF);
+                if (direction(data) == 2)
+                    pixel_put(&data->img_3D, i, j, 0xF50FFF);
+                if (direction(data) == 3)
+                    pixel_put(&data->img_3D, i, j, 0xF0FFFF);
+                if (direction(data) == 4)
+                    pixel_put(&data->img_3D, i, j, 0xFF00FF);
             }
             else
                 pixel_put(&data->img_3D, i, j, 0xFFBF000);
@@ -32,5 +52,4 @@ void    raycasting(t_cub *data)
         i++;
         x+= 0.001;
     }
-    // mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
 }

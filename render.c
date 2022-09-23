@@ -11,7 +11,7 @@ int line_length(t_cub *data, double x, double y)
 void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 {
 	int		pixels;
-	// (void)color;
+
 	data->pixelX = data->xpos;
 	data->pixelY = data->ypos;
 	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
@@ -26,7 +26,6 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 	}
 	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2));
     data->wall = (g_i * WINDOW_HEIGHT) / data->player_dis;
-	// data->wall = (WINDOW_HEIGHT /  data->player_dis) * data->wall_height;
 }
 
 
@@ -74,7 +73,6 @@ void	render_fov(t_cub *data)
 	l = data->rotation_angle;
 	while (x < PI / 6)
 	{
-		// raycasting(data);
 		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
 		x += 0.001;
 	}
