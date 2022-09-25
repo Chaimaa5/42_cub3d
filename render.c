@@ -17,7 +17,7 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
 	deltaX /= pixels;
 	deltaY /= pixels;
-	data->wall_height = (1080 / 2) / tan(30);
+	data->wall_height = (WINDOW_HEIGHT / 2) / tan(30);
 	while (line_length(data, data->pixelX, data->pixelY))
 	{	
 	    pixel_put(&data->img_3D, data->pixelX, data->pixelY, color);
@@ -25,7 +25,7 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 	    data->pixelY += deltaY;
 	}
 	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2));
-    data->wall = (g_i * WINDOW_HEIGHT) / data->player_dis;
+    data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
 }
 
 
@@ -73,7 +73,7 @@ void	render_fov(t_cub *data)
 	l = data->rotation_angle;
 	while (x < PI / 6)
 	{
-		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
+		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0xCCC899);
 		x += 0.001;
 	}
 	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080);
@@ -92,9 +92,7 @@ void	render_map(t_cub *data)
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == '1')
-				render_square(data,  data->i_2D * i, data->i_2D  * j, 0x000BB0);
-			else if (data->map[j][i] == '0')
-				render_square(data, data->i_2D * i, data->i_2D  * j, 0x000000);
+				render_square(data,  data->i_2D * i, data->i_2D  * j, 0x3F4A4F);
 			i++;
 		}
 		j++;

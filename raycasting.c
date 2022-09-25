@@ -18,15 +18,18 @@ int direction(t_cub *data)
     return(k);
 }
 
-
 void    raycasting(t_cub *data)
 {
     int i = 0;
     int j;
     double x  = - PI / 6;
+            data->tex.texX = 0;
+        data->tex.texY = 0;
+
     double l = data->rotation_angle;
     while (i < WINDOW_WIDTH)
     {
+      data->tex.texX = (int)data->xpos  %  data->i_2D;
         j = 0;
         if ( x < PI / 6 && x != 0)
             render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
@@ -34,19 +37,22 @@ void    raycasting(t_cub *data)
         {
             if (j < (WINDOW_HEIGHT - data->wall)  / 2)
                 pixel_put(&data->img_3D, i, j, 0xFFFFFF);
-            else if (j < ((WINDOW_HEIGHT - data->wall)  / 2) + data->wall)
+            else if (j < ((WINDOW_HEIGHT - data->wall) / 2) + data->wall)
             {
-                if (direction(data) == 1)
-                    pixel_put(&data->img_3D, i, j, 0xFF4FFF);
-                if (direction(data) == 2)
-                    pixel_put(&data->img_3D, i, j, 0xF50FFF);
-                if (direction(data) == 3)
-                    pixel_put(&data->img_3D, i, j, 0xF0FFFF);
-                if (direction(data) == 4)
-                    pixel_put(&data->img_3D, i, j, 0xFF00FF);
+                // if (data->tex.texY > 64)
+                    data->tex.texY = (int)data->ypos % data->i_2D;
+                // if (direction(data) == 1)
+                    pixel_put(&data->img_3D, i, j, get_pixel_color(&data->tex));
+                // if (direction(data) == 2)
+                //     pixel_put(&data->img_3D, i, j, 0xE0AC69);
+                // if (direction(data) == 3)
+                //     pixel_put(&data->img_3D, i, j, 0xF1C27D);
+                // if (direction(data) == 4)
+                //     pixel_put(&data->img_3D, i, j, 0xFFDBAC);
+                // data->tex.texY++;
             }
             else
-                pixel_put(&data->img_3D, i, j, 0xFFBF000);
+                pixel_put(&data->img_3D, i, j, 0x8D5524);
             j++;
         }
         i++;
