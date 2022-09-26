@@ -30,7 +30,7 @@ void    raycasting(t_cub *data)
         //     wall_x = data->ypos + data->player_dis * data->pixelY;
         // else
         //     wall_x = data->xpos + data->player_dis * data->pixelX;
-        data->tex.texX = i / data->i_2D;
+        // data->tex.texX = i / 64;
         j = 0;
         if ( x < PI / 6 && x != 0)
             render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
@@ -40,18 +40,17 @@ void    raycasting(t_cub *data)
                 pixel_put(&data->img_3D, i, j, 0xFFFFFF);
             else if (j < ((WINDOW_HEIGHT - data->wall) / 2) + data->wall)
             {
-                data->tex.texY = (j - (((WINDOW_HEIGHT - data->wall) / 2))) / data->i_2D;
+                // data->tex.texY = (j - (((WINDOW_HEIGHT - data->wall) / 2))) / 64;
                 //     data->tex.texY =tex;
                 //     tex += step;
-                // if (direction(data) == 1)
-                    pixel_put(&data->img_3D, i, j, get_pixel_color(&data->tex));
-                // if (direction(data) == 2)
-                //     pixel_put(&data->img_3D, i, j, 0xE0AC69);
-                // if (direction(data) == 3)
-                //     pixel_put(&data->img_3D, i, j, 0xF1C27D);
-                // if (direction(data) == 4)
-                //     pixel_put(&data->img_3D, i, j, 0xFFDBAC);
-                data->tex.texY++;
+                if (direction(data) == 1)
+                    pixel_put(&data->img_3D, i, j, 0xE0AC69);
+                if (direction(data) == 2)
+                    pixel_put(&data->img_3D, i, j, 0xE0AC69);
+                if (direction(data) == 3)
+                    pixel_put(&data->img_3D, i, j, 0xF1C27D);
+                if (direction(data) == 4)
+                    pixel_put(&data->img_3D, i, j, 0xFFDBAC);
             }
             else
                 pixel_put(&data->img_3D, i, j, 0x8D5524);

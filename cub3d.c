@@ -125,7 +125,7 @@ void	window(t_cub *data)
 	char	*path = "bluestone.xpm";
 	while (data->map[j])
 		j++;
-	data->i_2D = 500 / i;
+	data->i_2D = 50;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, 1080, 720, "Cub3d!");
 	data->img_3D.mlx_img = mlx_new_image(data->mlx, 1080, 720);
