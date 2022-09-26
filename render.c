@@ -8,10 +8,10 @@ int line_length(t_cub *data, double x, double y)
 	return(1);
 }
 
-void	render_line(t_cub *data, double deltaX, double deltaY, int color)
+void	render_line(t_cub *data, double deltaX, double deltaY)
 {
 	int		pixels;
-	(void)color;
+
 	data->pixelX = data->xpos;
 	data->pixelY = data->ypos;
 	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
@@ -20,7 +20,6 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 	data->wall_height = (WINDOW_HEIGHT / 2) / tan(30);
 	while (line_length(data, data->pixelX, data->pixelY))
 	{	
-	    pixel_put(&data->img_3D, data->pixelX, data->pixelY, color);
 	    data->pixelX += deltaX;
 	    data->pixelY += deltaY;
 	}
@@ -40,7 +39,7 @@ void	render_player(t_cub *data, int r)
 	{
 		x1 = r * cos(angle * PI / 180);
 		y1 = r * sin(angle * PI / 180);
-		pixel_put(&data->img_3D, (data->xpos) + x1, (data->ypos) + y1, 0x40E0D0);
+		pixel_put(&data->img_3D, ((data->xpos / data->i_2D) * 20) + x1, ((data->ypos / data->i_2D) * 20) + y1, 0x40E0D0);
 		angle += 0.01;
 	}
 }
@@ -52,31 +51,16 @@ void	render_square(t_cub *data, int x, int y, int color)
 
 	i = 0;
 	j = 0;
-	while(i < data->i_2D)
+	while(i < 20)
 	{
 		j = 0;
-		while (j < data->i_2D)
+		while (j < 20)
 		{
 			pixel_put(&data->img_3D, x + j, y + i, color);
 			j++;
 		}
 		i++;
 	}
-}
-
-void	render_fov(t_cub *data)
-{
-	double	x;
-	double	l;
-
-	x = -PI / 6;
-	l = data->rotation_angle;
-	while (x < PI / 6)
-	{
-		render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0xCCC899);
-		x += 0.001;
-	}
-	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080);
 }
 
 void	render_map(t_cub *data)
@@ -92,14 +76,11 @@ void	render_map(t_cub *data)
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == '1')
-				render_square(data,  data->i_2D * i, data->i_2D * j, 0x3F4A4F);
-			if (data->map[j][i] == '0')
-				render_square(data,  data->i_2D * i, data->i_2D * j, 0xFFFFFF);
+				render_square(data,  20 * i, 20 * j, 0x3F4A4F);
 			i++;
 		}
 		j++;
 	}
-	render_fov(data);
 	render_player(data, 2);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
 	// mlx_destroy_image(data->mlx, data->img_3D.mlx_img);

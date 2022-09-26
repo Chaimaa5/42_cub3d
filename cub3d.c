@@ -1,44 +1,5 @@
 #include "cub3d.h"
 
-int key_handler(int key, t_cub *data)
-{
-	if (key == KEY_UP)
-	{
-		data->walk = 1;
-		data->move_step = data->walk * data->move_speed;
-		if (check_wall_collision(data))
-		{
-			data->xpos += cos(data->rotation_angle) * data->move_step;
-			data->ypos += sin(data->rotation_angle) * data->move_step;
-			render_map(data);
-		}
-	}
-	else if (key == KEY_DOWN)
-	{
-		data->walk = -1;
-		data->move_step = data->walk * data->move_speed;
-		if (check_wall_collision(data))
-		{
-			data->xpos += cos(data->rotation_angle) * data->move_step;
-			data->ypos += sin(data->rotation_angle) * data->move_step;
-			render_map(data);
-		}
-	}
-	else if (key == KEY_RIGHT)
-	{
-		data->side = 1;
-		data->rotation_angle += data->side * data->rotation_speed;
-		render_map(data);
-	}
-	else if (key == KEY_LEFT)
-	{
-		data->side = -1;
-		data->rotation_angle += data->side * data->rotation_speed;
-		render_map(data);
-	}
-	return (0);	
-}
-
 double check_direction(t_cub *data)
 {
 	int	i;
@@ -70,9 +31,9 @@ void player_init(t_cub *data)
 {
 	data->side = 0;
 	data->walk = 0;
-	data->move_speed = 3;
+	data->move_speed = 5;
 	data->rotation_angle = check_direction(data);
-	data->rotation_speed = 3 * (PI / 180);
+	data->rotation_speed = 5 * (PI / 180);
 }
 
 void player_pos_2D(t_cub *data)
@@ -91,7 +52,7 @@ void player_pos_2D(t_cub *data)
 			{
 				data->map[j][i] = '0';
 				data->xpos = i * data->i_2D;
-				data->ypos = j *  data->i_2D;				
+				data->ypos = j * data->i_2D;				
 			}
 			i++;
 		}
@@ -125,8 +86,7 @@ void	window(t_cub *data)
 	char	*path = "bluestone.xpm";
 	while (data->map[j])
 		j++;
-	data->i_3D = 50;
-	data->i_2D = 50 * 0.2;
+	data->i_2D = 50;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, 1080, 720, "Cub3d!");
 	data->img_3D.mlx_img = mlx_new_image(data->mlx, 1080, 720);

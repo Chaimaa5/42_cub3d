@@ -49,7 +49,6 @@ typedef struct s_cub{
     double  player_dis;
     double  wall;
     int     i_2D;
-    int     i_3D;
     double  pixelX;
     double  pixelY;
     t_img   img_3D;
@@ -57,19 +56,21 @@ typedef struct s_cub{
 }   t_cub;
 
 
-void	render_line(t_cub *data, double deltaX, double deltaY, int color);
+void	render_line(t_cub *data, double deltaX, double deltaY);
 void	render_player(t_cub *data, int r);
 void	render_square(t_cub *data, int x, int y, int color);
 void	render_map(t_cub *data);
-char	**read_map(int i);
-int     check_elements(char **map);
 void	check_map(char **map);
-int     check_wall_collision(t_cub *data);
 void	pixel_put(t_img *img, int x, int y, int color);
 void    raycasting(t_cub *data);
-void player_pos(t_cub *data);
-int check_wall_collision_2D(t_cub *data);
-int	get_pixel_color(t_texture *tex);
-void	render_fov(t_cub *data);
+void    player_pos(t_cub *data);
+void    render_fov(t_cub *data);
+char	**read_map(int i);
+int     check_elements(char **map);
+int     check_wall_collision(t_cub *data);
+int     check_wall_collision_2D(t_cub *data);
+int     get_pixel_color(t_texture *tex);
+int     key_handler(int key, t_cub *data);
+
 
 #endif
