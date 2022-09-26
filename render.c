@@ -3,7 +3,7 @@
 
 int line_length(t_cub *data, double x, double y)
 {
-	if (data->map[(int)y / 20][(int)x / 20] == '1')
+	if (data->map[(int)y / data->i_2D][(int)x / data->i_2D] == '1')
 		return(0);
 	return(1);
 }
@@ -20,7 +20,7 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color)
 	data->wall_height = (WINDOW_HEIGHT / 2) / tan(30);
 	while (line_length(data, data->pixelX, data->pixelY))
 	{	
-	    // pixel_put(&data->img_3D, data->pixelX, data->pixelY, color);
+	    pixel_put(&data->img_3D, data->pixelX, data->pixelY, color);
 	    data->pixelX += deltaX;
 	    data->pixelY += deltaY;
 	}
@@ -52,10 +52,10 @@ void	render_square(t_cub *data, int x, int y, int color)
 
 	i = 0;
 	j = 0;
-	while(i < 20)
+	while(i < data->i_2D)
 	{
 		j = 0;
-		while (j < 20)
+		while (j < data->i_2D)
 		{
 			pixel_put(&data->img_3D, x + j, y + i, color);
 			j++;
@@ -92,7 +92,9 @@ void	render_map(t_cub *data)
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == '1')
-				render_square(data,  20 * i, 20 * j, 0x3F4A4F);
+				render_square(data,  data->i_2D * i, data->i_2D * j, 0x3F4A4F);
+			if (data->map[j][i] == '0')
+				render_square(data,  data->i_2D * i, data->i_2D * j, 0xFFFFFF);
 			i++;
 		}
 		j++;

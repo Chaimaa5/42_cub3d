@@ -90,8 +90,8 @@ void player_pos_2D(t_cub *data)
 				|| data->map[j][i] == 'S' || data->map[j][i] == 'W')
 			{
 				data->map[j][i] = '0';
-				data->xpos = i * 20;
-				data->ypos = j * 20;				
+				data->xpos = i * data->i_2D;
+				data->ypos = j *  data->i_2D;				
 			}
 			i++;
 		}
@@ -125,7 +125,8 @@ void	window(t_cub *data)
 	char	*path = "bluestone.xpm";
 	while (data->map[j])
 		j++;
-	data->i_2D = 50;
+	data->i_3D = 50;
+	data->i_2D = 50 * 0.2;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, 1080, 720, "Cub3d!");
 	data->img_3D.mlx_img = mlx_new_image(data->mlx, 1080, 720);

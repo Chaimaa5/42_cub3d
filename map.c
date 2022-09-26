@@ -7,22 +7,23 @@ int check_wall_collision(t_cub *data)
 	
 	i = data->xpos + cos(data->rotation_angle) * data->move_step;
 	j = data->ypos + sin(data->rotation_angle) * data->move_step;
-	if(data->map[j / 20][i / 20] == '1')
+	if(data->map[j / data->i_2D][i / data->i_2D] == '1')
 		return(0);
 	return(1);
 }
 
-int check_wall_collision_2D(t_cub *data)
-{
-	int i;
-	int j;
+// int check_wall_collision_2D(t_cub *data)
+// {
+// 	int i;
+// 	int j;
 	
-	i = data->xpos + cos(data->rotation_angle) * data->move_step;
-	j = data->ypos + sin(data->rotation_angle) * data->move_step;
-	if(data->map[j / 20][i / 20] == '1')
-		return(0);
-	return(1);
-}
+// 	i = data->xpos + cos(data->rotation_angle) * data->move_step;
+// 	j = data->ypos + sin(data->rotation_angle) * data->move_step;
+// 	if(data->map[j / 20][i / 20] == '1')
+// 		return(0);
+// 	return(1);
+// }
+
 int	check_wall(char **map)
 {
 	int	i;

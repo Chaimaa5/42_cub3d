@@ -49,6 +49,7 @@ typedef struct s_cub{
     double  player_dis;
     double  wall;
     int     i_2D;
+    int     i_3D;
     double  pixelX;
     double  pixelY;
     t_img   img_3D;

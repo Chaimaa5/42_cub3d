@@ -4,13 +4,13 @@ int direction(t_cub *data)
 {
     int k;
 
-    if(data->map[(((int)data->pixelY + 1) / data->i_2D)][((int)data->pixelX / data->i_2D)] == '0')
+    if(data->map[(((int)data->pixelY + 1) / data->i_3D)][((int)data->pixelX / data->i_3D)] == '0')
         k = 1;
-    if(data->map[((int)data->pixelY / data->i_2D)][(((int)data->pixelX + 1) / data->i_2D)] == '0')
+    if(data->map[((int)data->pixelY / data->i_3D)][(((int)data->pixelX + 1) / data->i_3D)] == '0')
         k = 2;
-    if(data->map[(((int)data->pixelY - 1) / data->i_2D)][((int)data->pixelX / data->i_2D)] == '0')
+    if(data->map[(((int)data->pixelY - 1) / data->i_3D)][((int)data->pixelX / data->i_3D)] == '0')
         k = 3;
-    if(data->map[((int)data->pixelY / data->i_2D)][(((int)data->pixelX - 1) / data->i_2D)] == '0')
+    if(data->map[((int)data->pixelY / data->i_3D)][(((int)data->pixelX - 1) / data->i_3D)] == '0')
         k = 4;
     return(k);
 }
