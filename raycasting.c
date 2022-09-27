@@ -18,7 +18,7 @@ int direction(t_cub *data)
 void    wall_projection(t_cub *data, int i, int j)
 {
     if (direction(data) == 1)
-        pixel_put(&data->img_3D, i, j, get_pixel_color(&data->tex));
+        pixel_put(&data->img_3D, i, j, 0xE0AC69);
     if (direction(data) == 2)
         pixel_put(&data->img_3D, i, j, 0xE0AC69);
     if (direction(data) == 3)
@@ -33,12 +33,12 @@ void    raycasting(t_cub *data)
     int j;
     double x  = - PI / 6;
 
-    while (i < WINDOW_WIDTH)
+    while (i < WINDOW_WIDTH )
     {
         j = 0;
         if ( x < PI / 6 && x != 0)
-            render_line(data,( cos(data->rotation_angle + x) * 1000), (sin(data->rotation_angle + x) * 1000));
-        while(j < WINDOW_HEIGHT)
+            render_line(data, cos(data->rotation_angle + x) * 1000, (sin(data->rotation_angle + x) * 1000), data->rotation_angle + x);
+        while(j < WINDOW_HEIGHT )
         {
             if (j < (WINDOW_HEIGHT - data->wall)  / 2)
                 pixel_put(&data->img_3D, i, j, 0xFFFFFF);

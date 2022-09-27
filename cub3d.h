@@ -12,8 +12,8 @@
 #define PI 3.1415926535
 #define PI2 1.5708 //pi/2
 #define PI3 4.71239 //3pi/2
-#define WINDOW_WIDTH 1080
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 1600
+#define WINDOW_HEIGHT 900
 typedef struct   s_img{
     void    *mlx_img;
     char    *addr;
@@ -56,7 +56,7 @@ typedef struct s_cub{
 }   t_cub;
 
 
-void	render_line(t_cub *data, double deltaX, double deltaY);
+void	render_line(t_cub *data, double deltaX, double deltaY, double ray_angle);
 void	render_player(t_cub *data, int r);
 void	render_square(t_cub *data, int x, int y, int color);
 void	render_map(t_cub *data);
