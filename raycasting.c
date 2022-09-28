@@ -29,15 +29,17 @@ void    wall_projection(t_cub *data, int i, int j)
 
 void    raycasting(t_cub *data)
 {
-    int i = 0;
+    int i;
     int j;
-    double x  = - PI / 6;
-
+    double x ;
+    
+    i = 0;
+    x = -32;
     while (i < WINDOW_WIDTH )
     {
         j = 0;
-        if ( x < PI / 6 && x != 0)
-            render_line(data, cos(data->rotation_angle + x) * 1000, (sin(data->rotation_angle + x) * 1000), data->rotation_angle + x);
+        if ( x < 32 )
+            render_line(data, (data->xpos + cos(data->rotation_angle + x) * 1000) - data->xpos, (data->ypos + sin(data->rotation_angle + x) * 1000) - data->ypos, data->rotation_angle + x);
         while(j < WINDOW_HEIGHT )
         {
             if (j < (WINDOW_HEIGHT - data->wall)  / 2)
@@ -49,6 +51,6 @@ void    raycasting(t_cub *data)
             j++;
         }
         i++;
-        x+= 0.001;
+        x+= 1 / (WINDOW_WIDTH / 50);
     }
 }
