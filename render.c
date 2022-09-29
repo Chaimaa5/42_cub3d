@@ -7,31 +7,53 @@ int line_length(t_cub *data, double x, double y)
 	return(1);
 }
 
+// void	render_line(t_cub *data, double X2, double Y2, double ray_angle)
+// {
+// 	(void)ray_angle;
+// 	double step;
+// 	double deltaX = fabs(X2 - data->xpos);
+// 	double deltaY = fabs(Y2 - data->ypos);
+// 	if (deltaX  >= deltaY)
+// 		step = deltaX;
+// 	else
+// 		step = deltaY;
+// 	deltaX /= step;
+// 	deltaY /= step;
+// 	data->pixelX = data->xpos;
+// 	data->pixelY = data->ypos;
+// 	while (line_length(data, data->pixelX, data->pixelY))
+// 	{	
+// 		pixel_put(&data->img_3D, data->pixelX, data->pixelY, 0xFAAAAA);
+// 	    data->pixelX += deltaX;
+// 	    data->pixelY += deltaY;
+// 	}
+// 	data->player_dis = (sqrt(pow(data->xpos  - data->pixelX , 2) + pow(data->ypos  - data->pixelY, 2)));
+// 	data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
+// }
+
+
 void	render_line(t_cub *data, double X2, double Y2, double ray_angle)
 {
 	(void)ray_angle;
 	double step;
 	double deltaX = fabs(X2 - data->xpos);
 	double deltaY = fabs(Y2 - data->ypos);
-	if (deltaX  > deltaY)
+	if (deltaX  >= deltaY)
 		step = deltaX;
 	else
 		step = deltaY;
-	double inc_x = deltaX / step;
-	double inc_y = deltaY / step;
+	deltaX /= step;
+	deltaY /= step;
 	data->pixelX = data->xpos;
 	data->pixelY = data->ypos;
 	while (line_length(data, data->pixelX, data->pixelY))
 	{	
-		pixel_put(&data->img_3D, data->pixelX, data->pixelY, 0xFAAAAA);
-	    data->pixelX += inc_x;
-	    data->pixelY += inc_y;
+ 	    data->pixelX += deltaX;
+	    data->pixelY += deltaY;
 	}
 	data->player_dis = (sqrt(pow(data->xpos  - data->pixelX , 2) + pow(data->ypos  - data->pixelY, 2)));
 	data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
 }
-
-
 void	render_player(t_cub *data, int r)
 {
 	double	angle;
@@ -66,6 +88,7 @@ void	render_square(t_cub *data, int x, int y, int color)
 		i++;
 	}
 }
+
 
 void	render_map(t_cub *data)
 {

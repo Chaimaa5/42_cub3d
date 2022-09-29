@@ -14,6 +14,7 @@
 #define PI3 4.71239 //3pi/2
 #define WINDOW_WIDTH 1600
 #define WINDOW_HEIGHT 900
+#define FOV 60 * (PI / 180)
 typedef struct   s_img{
     void    *mlx_img;
     char    *addr;
