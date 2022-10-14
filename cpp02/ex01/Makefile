@@ -1,7 +1,7 @@
-NAME = Zombie
+NAME = Fixed
 CC = c++
 FLAGS = -Wall -Werror -Wextra -std=c++98
-SRC = main.cpp Zombie.cpp ZombieHorde.cpp
+SRC = main.cpp Fixed.cpp
 
 all: $(NAME)
 
@@ -10,5 +10,4 @@ $(NAME):
 
 fclean:
 	rm -f $(NAME)
-	
 re: fclean all

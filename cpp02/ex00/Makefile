@@ -1,7 +1,7 @@
-NAME = harlFilter
+NAME = Fixed
 CC = c++
 FLAGS = -Wall -Werror -Wextra -std=c++98
-SRC = main.cpp Harl.cpp
+SRC = main.cpp Fixed.cpp
 
 all: $(NAME)
 
