@@ -1,13 +1,14 @@
 #include "Fixed.hpp"
 
-Fixed::Fixed(const int fixed_point_number) : fixed_point_number(fixed_point_number)
+Fixed::Fixed(const int fixed_point_number)
 {
+    this->fixed_point_number = roundf(fixed_point_number * (1 << fractional_bits));
     std::cout << "Int Constructor called\n";
 }
 
 Fixed::Fixed(const float fixed_point_number)
 {
-    this->fixed_point_number = roundf(fixed_point_number * (1 << fractional_bits));
+    this->fixed_point_number = roundf(fixed_point_number * (pow(2, fractional_bits) ));
     std::cout << "Float Constructor called\n";
 }
 
@@ -52,11 +53,11 @@ int Fixed::toInt() const
 
 float Fixed::toFloat() const
 {
-    return (fixed_point_number * (float)(1 << fractional_bits));
+    return (fixed_point_number / (pow(2, fractional_bits)));
 }
 
 std::ostream & operator<<(std::ostream & os, const Fixed & F)
 {
-    os << F.getRawBits();
+    os << F.toFloat();
     return (os);
 }

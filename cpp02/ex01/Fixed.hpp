@@ -5,7 +5,7 @@
 #include <cmath>
 class Fixed{
     private:
-        int  fixed_point_number;
+        float  fixed_point_number;
         static const int  fractional_bits = 8;
     public:
         Fixed();
