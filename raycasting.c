@@ -29,7 +29,7 @@ void    wall_projection(t_cub *data, int i, int j)
 
 void    raycasting(t_cub *data)
 {
-    int i = 0;
+    int i;
     int j;
     double x  = -32;
     double r = data->rotation_angle;
