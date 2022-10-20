@@ -69,5 +69,6 @@ void    raycasting(t_cub *data);
 void player_pos(t_cub *data);
 int check_wall_collision_2D(t_cub *data);
 int	get_pixel_color(t_texture *tex);
+int key_handler(int key, t_cub *data);
 
 #endif
