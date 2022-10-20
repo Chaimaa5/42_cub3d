@@ -1,5 +1,6 @@
 #include "cub3d.h"
 
+
 int line_length(t_cub *data, double x, double y)
 {
 	if (data->map[(int)y / data->i_2D][(int)x / data->i_2D] == '1')
@@ -11,20 +12,12 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c)
 {
 	int		pixels;
 
-void	render_line(t_cub *data, double X2, double Y2, double ray_angle)
-{
-	(void)ray_angle;
-	double step;
-	double deltaX = fabs(X2 - data->xpos);
-	double deltaY = fabs(Y2 - data->ypos);
-	if (deltaX  >= deltaY)
-		step = deltaX;
-	else
-		step = deltaY;
-	deltaX /= step;
-	deltaY /= step;
 	data->pixelX = data->xpos;
 	data->pixelY = data->ypos;
+	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
+	deltaX /= pixels;
+	deltaY /= pixels;
+	data->wall_height = (WINDOW_HEIGHT / 2) / tan(30);
 	while (line_length(data, data->pixelX, data->pixelY))
 	{	
 		if(c)
@@ -32,9 +25,11 @@ void	render_line(t_cub *data, double X2, double Y2, double ray_angle)
 	    data->pixelX += deltaX;
 	    data->pixelY += deltaY;
 	}
-	data->player_dis = (sqrt(pow(data->xpos  - data->pixelX , 2) + pow(data->ypos  - data->pixelY, 2)));
-	data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
+	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2));
+    data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
 }
+
+
 void	render_player(t_cub *data, int r)
 {
 	double	angle;
