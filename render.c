@@ -7,25 +7,23 @@ int line_length(t_cub *data, double x, double y)
 	return(1);
 }
 
-void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c, int ray)
+void	render_line(t_cub *data, double deltaX, double deltaY, int color, int ray)
 {
 	int		pixels;
-
+	(void)color;
 	data->pixelX = data->xpos;
 	data->pixelY = data->ypos;
 	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
 	deltaX /= pixels;
 	deltaY /= pixels;
-	(void)c;
 	while (line_length(data, data->pixelX, data->pixelY))
 	{	
-		if(c)
-	    	pixel_put(&data->img_3D, (data->pixelX / data->i_2D) * 20, (data->pixelY / data->i_2D) * 20, color);
+	    // pixel_put(&data->img_3D, (data->pixelX / data->i_2D) * 20, (data->pixelY / data->i_2D) * 20, color);
 	    data->pixelX += deltaX;
 	    data->pixelY += deltaY;
 	}
 	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2));
-    data->wall = (data->i_2D * WINDOW_HEIGHT) / (data->player_dis * cos(ray * (PI / 180)));
+    data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
 	(void)ray;
 }
 
@@ -35,7 +33,6 @@ void	render_player(t_cub *data, int r)
 	double	x1;
 	double	y1;
 	angle = 0;
-	(void)data;
 	while (angle < 360)
 	{
 		x1 = r * cos(angle * PI / 180);
@@ -64,23 +61,23 @@ void	render_square(t_cub *data, int x, int y, int color)
 	}
 }
 
-void	render_fov(t_cub *data)
-{
-	double	x;
-	double	l;
+// void	render_fov(t_cub *data)
+// {
+// 	double	x;
+// 	double	l;
 
-	x = -PI/6;
-	l = data->rotation_angle;
-	double xx, y;
-	xx = (data->xpos);
-	y = (data->ypos);
-	while (x < PI/6)
-	{
-		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0xCCC899, 1, 0);
-		x += 0.06 / 50;
-	}
-	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080, 1, 0);
-}
+// 	x = -0.558505;
+// 	l = data->rotation_angle;
+// 	double xx, y;
+// 	xx = (data->xpos);
+// 	y = (data->ypos);
+// 	while (x <= 0.558505)
+// 	{
+// 		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0xCCC899, 1, 0);
+// 		x += 0.06 / 50;
+// 	}
+// 	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080, 1, 0);
+// }
 
 void	render_map(t_cub *data)
 {
@@ -100,8 +97,8 @@ void	render_map(t_cub *data)
 		}
 		j++;
 	}
-	render_player(data, 5);
-	render_fov(data);
+	render_player(data, 2);
+	// render_fov(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
 	// mlx_destroy_image(data->mlx, data->img_3D.mlx_img);
 }

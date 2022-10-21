@@ -36,10 +36,10 @@ void    raycasting(t_cub *data)
 
     while (i < WINDOW_WIDTH )
     {
-        if(x < 32)
+        if(x <= 32)
         {
             render_line(data, (data->xpos + cos(r + x) * 1000) - data->xpos,
-                (data->ypos +  sin(r + x) * 1000) - data->ypos, 0xF96dFF, 0, r);
+                (data->ypos +  sin(r + x) * 1000) - data->ypos, 0xF96dFF, x);
             x+= 0.06 / 50;
         }
         j = 0;
