@@ -7,26 +7,48 @@ int line_length(t_cub *data, double x, double y)
 	return(1);
 }
 
-void	render_line(t_cub *data, double deltaX, double deltaY, int color, int ray)
-{
-	int		pixels;
-	(void)color;
-	data->pixelX = data->xpos;
-	data->pixelY = data->ypos;
-	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
-	deltaX /= pixels;
-	deltaY /= pixels;
-	while (line_length(data, data->pixelX, data->pixelY))
-	{	
-	    // pixel_put(&data->img_3D, (data->pixelX / data->i_2D) * 20, (data->pixelY / data->i_2D) * 20, color);
-	    data->pixelX += deltaX;
-	    data->pixelY += deltaY;
-	}
-	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2));
-    data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
-	(void)ray;
-}
+// void	render_line(t_cub *data, double X2, double Y2, double ray_angle)
+// {
+// 	(void)ray_angle;
+// 	double step;
+// 	double deltaX = fabs(X2 - data->xpos);
+// 	double deltaY = fabs(Y2 - data->ypos);
+// 	deltaX /= step;
+// 	deltaY /= step;
+// 	data->pixelX = data->xpos;
+// 	data->pixelY = data->ypos;
+// 	while (line_length(data, data->pixelX, data->pixelY))
+// 	{	
+// 		pixel_put(&data->img_3D, data->pixelX, data->pixelY, 0xFAAAAA);
+// 	    data->pixelX += deltaX;
+// 	    data->pixelY += deltaY;
+// 	}
+// 	data->player_dis = (sqrt(pow(data->xpos  - data->pixelX , 2) + pow(data->ypos  - data->pixelY, 2)));
+// 	data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
+// }
 
+
+void	render_line(t_cub *data,  double ray_angle)
+{
+	(void)ray_angle;
+	int i = 0;
+	double deltaX = data->xpos - data->ray.WallHitX;
+	double deltaY = data->ypos -  data->ray.WallHitY;
+	double step;
+	step = fabs(deltaX) > fabs(deltaY) ? fabs(deltaX) : fabs(deltaY);
+	double X = data->xpos;
+	double Y = data->ypos;
+	double Xinc = deltaX / step;
+	double Yinc = deltaY / step;
+	while(i < step)
+	{
+		// pixel_put(&data->img_3D, round((X/ data->i_2D) * 20), round((Y/ data->i_2D) * 20), 0x40E0D0);
+		X += Xinc;
+		Y += Yinc;
+	} 
+
+
+}
 void	render_player(t_cub *data, int r)
 {
 	double	angle;
@@ -37,7 +59,7 @@ void	render_player(t_cub *data, int r)
 	{
 		x1 = r * cos(angle * PI / 180);
 		y1 = r * sin(angle * PI / 180);
-		pixel_put(&data->img_3D, (data->xpos / data->i_2D) * 20 + x1, (data->ypos / data->i_2D) * 20 + y1, 0x40E0D0);
+		pixel_put(&data->img_3D, ((data->xpos / data->i_2D) * 20) + x1, ((data->ypos / data->i_2D) * 20) + y1, 0x40E0D0);
 		angle += 0.01;
 	}
 }
@@ -49,7 +71,7 @@ void	render_square(t_cub *data, int x, int y, int color)
 
 	i = 0;
 	j = 0;
-	while(i < (20))
+	while(i < 20)
 	{
 		j = 0;
 		while (j < 20)
@@ -60,6 +82,7 @@ void	render_square(t_cub *data, int x, int y, int color)
 		i++;
 	}
 }
+
 
 // void	render_fov(t_cub *data)
 // {
@@ -73,11 +96,12 @@ void	render_square(t_cub *data, int x, int y, int color)
 // 	y = (data->ypos);
 // 	while (x <= 0.558505)
 // 	{
-// 		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0xCCC899, 1, 0);
+// 		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0);
 // 		x += 0.06 / 50;
 // 	}
-// 	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080, 1, 0);
+// 	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0);
 // }
+
 
 void	render_map(t_cub *data)
 {
@@ -85,20 +109,23 @@ void	render_map(t_cub *data)
 	int j;
 
 	j = 0;
-	raycasting(data);
+	// raycasting(data);
 	while (data->map[j])
 	{
 		i = 0;
 		while (data->map[j][i])
 		{
+
 			if (data->map[j][i] == '1')
 				render_square(data,  20 * i, 20 * j, 0x3F4A4F);
+			else if (data->map[j][i] == '0')
+				render_square(data,  20 * i, 20 * j, 0xFFFFFF);
 			i++;
 		}
 		j++;
 	}
 	render_player(data, 2);
-	// render_fov(data);
+	castAllRays(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
 	// mlx_destroy_image(data->mlx, data->img_3D.mlx_img);
 }

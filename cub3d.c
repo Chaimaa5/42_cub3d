@@ -31,9 +31,9 @@ void player_init(t_cub *data)
 {
 	data->side = 0;
 	data->walk = 0;
-	data->move_speed = 3;
+	data->move_speed = 5;
 	data->rotation_angle = check_direction(data);
-	data->rotation_speed = 3 * (PI / 180);
+	data->rotation_speed = 5 * (PI / 180);
 }
 
 void player_pos_2D(t_cub *data)
@@ -82,14 +82,15 @@ void	window(t_cub *data)
 	int		x;
 	int		y;
 	j = 0;
-	i = ft_strlen(data->map[0]);
+	if (data->map[0])
+		i = ft_strlen(data->map[0]);
 	char	*path = "bluestone.xpm";
 	while (data->map[j])
 		j++;
 	data->i_2D = 50;
 	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, 1080, 720, "Cub3d!");
-	data->img_3D.mlx_img = mlx_new_image(data->mlx, 1080, 720);
+	data->mlx_win = mlx_new_window(data->mlx,WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d!");
+	data->img_3D.mlx_img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->img_3D.addr = mlx_get_data_addr(data->img_3D.mlx_img, &data->img_3D.bpp, &data->img_3D.line, &data->img_3D.endian);
 	data->tex.texture = mlx_xpm_file_to_image(data->mlx, path, &x, &y);
 	data->tex.img.addr =  mlx_get_data_addr(data->tex.texture, &data->tex.img.bpp, &data->tex.img.line, &data->tex.img.endian);
@@ -108,7 +109,8 @@ int main(int ac, char **av)
 	{
 		fd = open(av[1], O_RDONLY);
 		data.map = read_map(fd);
-		check_map(data.map);
+		if (data.map)
+			check_map(data.map);
 		window(&data);
 	}
 }

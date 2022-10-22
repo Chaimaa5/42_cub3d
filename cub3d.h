@@ -12,8 +12,11 @@
 #define PI 3.1415926535
 #define PI2 1.5708 //pi/2
 #define PI3 4.71239 //3pi/2
-#define WINDOW_WIDTH 1080
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 1600
+#define WINDOW_HEIGHT 900
+#define FOV 60 * (PI / 180)
+#define WALL_STRIP_WIDTH 4
+#define RAYS 1600 / 4
 typedef struct   s_img{
     void    *mlx_img;
     char    *addr;
@@ -31,7 +34,24 @@ typedef struct  s_texture{
     t_img   img;
     
 }   t_texture;
-double g_i;
+
+typedef struct s_ray{
+    double  HorizWalllDist;
+    double  VerWalllDist;
+    double VerWallHitX;
+    double VerWallHitY;
+    double HorizWallHitX;
+    double HorizWallHitY;
+    double yinter;
+    double xinter;
+    double xstep;
+    double ystep;
+    double VerWallHit;
+    double HorizWallHit;
+    double WallHitX;
+    double WallHitY;
+} t_ray;
+
 typedef struct s_cub{
     void	*mlx;
     void	*mlx_win;
@@ -45,7 +65,6 @@ typedef struct s_cub{
 	double	rotation_speed;
     double  move_step;
     char    direction;
-    double  wall_height;
     double  player_dis;
     double  wall;
     int     i_2D;
@@ -53,22 +72,26 @@ typedef struct s_cub{
     double  pixelY;
     t_img   img_3D;
     t_texture tex;
+    t_ray   ray;
 }   t_cub;
 
 
-void	render_line(t_cub *data, double deltaX, double deltaY, int color, int x);
+void	render_line(t_cub *data,  double ray_angle);
 void	render_player(t_cub *data, int r);
 void	render_square(t_cub *data, int x, int y, int color);
 void	render_map(t_cub *data);
-char	**read_map(int i);
-int     check_elements(char **map);
 void	check_map(char **map);
-int     check_wall_collision(t_cub *data);
 void	pixel_put(t_img *img, int x, int y, int color);
 void    raycasting(t_cub *data);
-void player_pos(t_cub *data);
-int check_wall_collision_2D(t_cub *data);
-int	get_pixel_color(t_texture *tex);
-int key_handler(int key, t_cub *data);
+void    player_pos(t_cub *data);
+void    render_fov(t_cub *data);
+char	**read_map(int i);
+int     check_elements(char **map);
+int     check_wall_collision(t_cub *data);
+int     check_wall_collision_2D(t_cub *data);
+int     get_pixel_color(t_texture *tex);
+int     key_handler(int key, t_cub *data);
+void    castAllRays(t_cub *data);
+
 
 #endif
