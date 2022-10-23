@@ -29,54 +29,54 @@ typedef struct  s_texture{
     void    *texture;
     int     texX;
     int     texY;
-    double  step;
-    double  texPos;
+    float  step;
+    float  texPos;
     t_img   img;
     
 }   t_texture;
 
 typedef struct s_ray{
-    double  HorizWalllDist;
-    double  VerWalllDist;
-    double VerWallHitX;
-    double VerWallHitY;
-    double HorizWallHitX;
-    double HorizWallHitY;
-    double yinter;
-    double xinter;
-    double xstep;
-    double ystep;
-    double VerWallHit;
-    double HorizWallHit;
-    double WallHitX;
-    double WallHitY;
+    float  HorizWalllDist;
+    float  VerWalllDist;
+    float VerWallHitX;
+    float VerWallHitY;
+    float HorizWallHitX;
+    float HorizWallHitY;
+    float yinter;
+    float xinter;
+    float xstep;
+    float ystep;
+    float VerWallHit;
+    float HorizWallHit;
+    float WallHitX;
+    float WallHitY;
 } t_ray;
 
 typedef struct s_cub{
     void	*mlx;
     void	*mlx_win;
     char	**map;
-    double  xpos;
-    double  ypos;
-	double	side;
-	double	walk;
-    double	rotation_angle;
-	double	move_speed;
-	double	rotation_speed;
-    double  move_step;
+    float  xpos;
+    float  ypos;
+	float	side;
+	float	walk;
+    float	rotation_angle;
+	float	move_speed;
+	float	rotation_speed;
+    float  move_step;
     char    direction;
-    double  player_dis;
-    double  wall;
+    float  player_dis;
+    float  wall;
     int     i_2D;
-    double  pixelX;
-    double  pixelY;
+    float  pixelX;
+    float  pixelY;
     t_img   img_3D;
     t_texture tex;
     t_ray   ray;
 }   t_cub;
 
 
-void	render_line(t_cub *data,  double ray_angle);
+void	render_line(t_cub *data,  float ray_angle);
 void	render_player(t_cub *data, int r);
 void	render_square(t_cub *data, int x, int y, int color);
 void	render_map(t_cub *data);
@@ -92,7 +92,7 @@ int     check_wall_collision_2D(t_cub *data);
 int     get_pixel_color(t_texture *tex);
 int     key_handler(int key, t_cub *data);
 void    castAllRays(t_cub *data);
-int		HitWall(t_cub *data, double HorzWallHitX, double HorzWallHitY);
+int		HitWall(t_cub *data, float HorzWallHitX, float HorzWallHitY);
 
 
 #endif

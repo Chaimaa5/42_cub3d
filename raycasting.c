@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-double	normalizeAngle(double rayAngle)
+float	normalizeAngle(float rayAngle)
 {
 	rayAngle = remainder(rayAngle, 2 * PI);
 	if (rayAngle < 0)
@@ -8,14 +8,14 @@ double	normalizeAngle(double rayAngle)
 	return (rayAngle);
 }
 
-int HitWall(t_cub *data, double HorzWallHitX, double HorzWallHitY)
+int HitWall(t_cub *data, float HorzWallHitX, float HorzWallHitY)
 {
     if (data->map[(int)floor(HorzWallHitY / data->i_2D)][(int)floor(HorzWallHitX / data->i_2D)] == '1')
 		return(0);
 	return(1);
 }
 
-void    HorizontalInter(t_cub *data, double rayAngle)
+void    HorizontalInter(t_cub *data, float rayAngle)
 {
     rayAngle = normalizeAngle(rayAngle);
     int RayFacingDown = rayAngle > 0 && rayAngle < PI;
@@ -34,13 +34,13 @@ void    HorizontalInter(t_cub *data, double rayAngle)
     data->ray.xstep *= (RayFacingLeft && data->ray.xstep > 0) ? -1 : 1;
     data->ray.xstep *= (RayFacingRight && data->ray.xstep < 0) ? -1 : 1;
 
-	double nextHorizxinter = data->ray.xinter;
-	double nextHorizyinter = data->ray.yinter;
+	float nextHorizxinter = data->ray.xinter;
+	float nextHorizyinter = data->ray.yinter;
 
 	while(nextHorizxinter >= 0 && nextHorizyinter >= 0 && nextHorizxinter <= WINDOW_WIDTH && nextHorizyinter <= WINDOW_HEIGHT)
 	{
-        double xCheck = nextHorizxinter;
-        double yCheck = nextHorizyinter + (RayFacingUp ? -1 : 0);
+        float xCheck = nextHorizxinter;
+        float yCheck = nextHorizyinter + (RayFacingUp ? -1 : 0);
 		if (HitWall(data, xCheck, yCheck))
 		{
 			data->ray.HorizWallHitX = nextHorizxinter;
@@ -57,11 +57,11 @@ void    HorizontalInter(t_cub *data, double rayAngle)
     }
 }
 
-void    VerticalInter(t_cub *data, double rayAngle)
+void    VerticalInter(t_cub *data, float rayAngle)
 {
     rayAngle = normalizeAngle(rayAngle);
-    int RayFacingDown = rayAngle > 0 && rayAngle < PI;
-    int RayFacingUp = !RayFacingDown;
+    // int RayFacingDown = rayAngle > 0 && rayAngle < PI;
+    // int RayFacingUp = !RayFacingDown;
     int RayFacingRight = rayAngle < 0.5 * PI || rayAngle > 1.5 * PI;
     int RayFacingLeft = !RayFacingRight;
 
@@ -75,13 +75,13 @@ void    VerticalInter(t_cub *data, double rayAngle)
     data->ray.ystep *= (RayFacingLeft && data->ray.ystep > 0) ? -1 : 1;
     data->ray.ystep *= (RayFacingRight && data->ray.ystep < 0) ? -1 : 1;
 
-	double nextVerXinter = data->ray.xinter;
-	double nextVerYinter = data->ray.yinter;
+	float nextVerXinter = data->ray.xinter;
+	float nextVerYinter = data->ray.yinter;
 
 	while(nextVerXinter >= 0 && nextVerYinter >= 0 && nextVerXinter <= WINDOW_WIDTH && nextVerYinter <= WINDOW_HEIGHT)
 	{
-        double yCheck = nextVerYinter;
-        double xCheck = nextVerXinter + (RayFacingUp ? -1 : 0);
+        float yCheck = nextVerYinter;
+        float xCheck = nextVerXinter + (RayFacingLeft ? -1 : 0);
 		if (HitWall(data, xCheck, yCheck))
 		{
 			data->ray.VerWallHitX = nextVerXinter;
@@ -117,7 +117,7 @@ void    WallDistance(t_cub *data)
 }
 
 
-void    castRay(t_cub *data, double rayAngle)
+void    castRay(t_cub *data, float rayAngle)
 {
         HorizontalInter(data, rayAngle);
         VerticalInter(data, rayAngle);
@@ -127,7 +127,7 @@ void    castRay(t_cub *data, double rayAngle)
 void    castAllRays(t_cub *data)
 {
 	int id = 0;
-	double rayAngle = data->rotation_angle - (FOV /2);
+	float rayAngle = data->rotation_angle - (FOV /2);
 	while (id < RAYS)
 	{
 		castRay(data, rayAngle);

@@ -1,15 +1,15 @@
 #include "cub3d.h"
 
-void	render_line(t_cub *data,  double ray_angle)
+void	render_line(t_cub *data,  float ray_angle)
 {
 	(void)ray_angle;
-	double deltaX = data->ray.WallHitX - data->xpos;
-	double deltaY = data->ray.WallHitY - data->ypos;
+	float deltaX = data->ray.WallHitX - data->xpos;
+	float deltaY = data->ray.WallHitY - data->ypos;
 	int pixels = sqrt(pow(deltaX, 2) + pow(deltaY, 2));
 	deltaX /= pixels;
 	deltaY /= pixels; 
-	double X = data->xpos;
-	double Y = data->ypos;
+	float X = data->xpos;
+	float Y = data->ypos;
 	while(HitWall(data, X, Y))
 	{
 		pixel_put(&data->img_3D, (X/ data->i_2D) * 20 , (Y/ data->i_2D) * 20, 0x40E0D0);
@@ -20,9 +20,9 @@ void	render_line(t_cub *data,  double ray_angle)
 }
 void	render_player(t_cub *data, int r)
 {
-	double	angle;
-	double	x1;
-	double	y1;
+	float	angle;
+	float	x1;
+	float	y1;
 	angle = 0;
 	while (angle < 360)
 	{
