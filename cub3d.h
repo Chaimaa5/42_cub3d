@@ -14,13 +14,14 @@
 #define PI3 4.71239 //3pi/2
 #define WINDOW_WIDTH 1600
 #define WINDOW_HEIGHT 900
-#define FOV 60 * (PI / 180)
+#define FOV (60 * (PI / 180))
 #define WALL_STRIP_WIDTH 4
-#define RAYS 1600 / 2
+#define RAYS (1600 / 4)
 #define UP 1
 #define DOWN 0
 #define RIGHT 2
 #define LEFT 3
+#define FLT_MAX 47.2498237715
 typedef struct   s_img{
     void    *mlx_img;
     char    *addr;
@@ -50,8 +51,8 @@ typedef struct s_ray{
     float xinter;
     float xstep;
     float ystep;
-    float VerWallHit;
-    float HorizWallHit;
+    int VerWallHit;
+    int HorizWallHit;
     float WallHitX;
     float WallHitY;
 } t_ray;

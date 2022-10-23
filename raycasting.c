@@ -122,8 +122,14 @@ void    VerticalInter(t_cub *data, float rayAngle)
 
 void    WallDistance(t_cub *data)
 {
-	data->ray.VerWalllDist =  (sqrt(pow(data->ray.VerWallHitX  - data->xpos , 2) + pow(data->ray.VerWallHitY  - data->ypos, 2)));
-	data->ray.HorizWalllDist = (sqrt(pow(data->ray.HorizWallHitX  - data->xpos , 2) + pow(data->ray.HorizWallHitY  - data->ypos, 2)));
+	if (data->ray.VerWallHit)
+		data->ray.VerWalllDist =  (sqrt(pow(data->ray.VerWallHitX  - data->xpos , 2) + pow(data->ray.VerWallHitY  - data->ypos, 2)));
+	else
+		data->ray.VerWalllDist = FLT_MAX;
+	if (data->ray.HorizWallHit)
+		data->ray.HorizWalllDist = (sqrt(pow(data->ray.HorizWallHitX  - data->xpos , 2) + pow(data->ray.HorizWallHitY  - data->ypos, 2)));
+	else
+		data->ray.HorizWalllDist = FLT_MAX;
 	if (data->ray.HorizWalllDist < data->ray.VerWalllDist && data->ray.HorizWalllDist > 0)
 	{
 		data->ray.WallHitX = data->ray.HorizWallHitX;
@@ -141,6 +147,7 @@ void    castRay(t_cub *data, float rayAngle)
         HorizontalInter(data, rayAngle);
         VerticalInter(data, rayAngle);
         WallDistance(data);
+		render_line(data, normalizeAngle(rayAngle));
 }
 
 void    castAllRays(t_cub *data)
@@ -150,9 +157,7 @@ void    castAllRays(t_cub *data)
 	while (id < RAYS)
 	{
 		castRay(data, normalizeAngle(rayAngle));
-		render_line(data, normalizeAngle(rayAngle));
 		rayAngle += FOV / RAYS;
 		id++;
 	}
-
 }
