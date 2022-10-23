@@ -12,7 +12,7 @@ void	render_line(t_cub *data,  float ray_angle)
 	float Y = data->ypos;
 	while(HitWall(data, X, Y))
 	{
-		pixel_put(&data->img_3D, (X/ data->i_2D) * 20 , (Y/ data->i_2D) * 20, 0x40E0D0);
+		pixel_put(&data->img_3D, (X / data->i_2D) * 20 , (Y / data->i_2D) * 20, 0x40E0D0);
 		X += deltaX;
 		Y += deltaY;
 		--pixels;

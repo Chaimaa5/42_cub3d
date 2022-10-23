@@ -16,7 +16,11 @@
 #define WINDOW_HEIGHT 900
 #define FOV 60 * (PI / 180)
 #define WALL_STRIP_WIDTH 4
-#define RAYS 1600 / 4
+#define RAYS 1600 / 2
+#define UP 1
+#define DOWN 0
+#define RIGHT 2
+#define LEFT 3
 typedef struct   s_img{
     void    *mlx_img;
     char    *addr;
