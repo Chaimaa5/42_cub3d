@@ -1,7 +1,7 @@
 NAME = cub3d
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g
-SRC = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c render.c   map.c raycasting.c moves.c
+SRC = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c render.c   map.c raycasting.c moves.c 
 LIB = libft.a
 INC = -lmlx -framework OpenGL -framework AppKit 
 
@@ -28,7 +28,7 @@ $(NAME): $(SRC) $(LIB)
 
 clean:
 	@echo "${_BOLD}${_RED}---------Cleaning Objects---------${_END}"
-	rm -f ${OBJ}
+	rm -f *.o
 	rm -f inc/libft/*.o
 fclean: clean
 	@echo "${_BOLD}${_RED}---------Deleting---------${_END}"

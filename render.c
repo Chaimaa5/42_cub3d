@@ -1,34 +1,50 @@
 #include "cub3d.h"
 
-void	render_line(t_cub *data,  float ray_angle)
-{
-	(void)ray_angle;
 
-	float deltaX = data->ray.WallHitX - data->xpos;
-	float deltaY = data->ray.WallHitY - data->ypos;
-	int pixels = sqrt(pow(deltaX, 2) + pow(deltaY, 2));
-	deltaX /= pixels;
-	deltaY /= pixels; 
-	float X = data->xpos;
-	float Y = data->ypos;
-	while(HitWall(data, X, Y))
-	{
-		pixel_put(&data->img_3D, (X / data->i_2D) * 20 , (Y / data->i_2D) * 20, 0x40E0D0);
-		X += deltaX;
-		Y += deltaY;
-	} 
+int line_length(t_cub *data, double x, double y)
+{
+	if (data->map[(int)y / data->i_2D][(int)x / data->i_2D] == '1')
+		return(0);
+	return(1);
 }
+
+void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c, double ray)
+{
+	int		pixels;
+
+	data->pixelX = data->xpos;
+	data->pixelY = data->ypos;
+	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
+	deltaX /= pixels;
+	deltaY /= pixels;
+	(void)c;
+	while (line_length(data, data->pixelX, data->pixelY))
+	{	
+		if(c)
+	    	pixel_put(&data->img_3D, (data->pixelX / data->i_2D) * 20, (data->pixelY / data->i_2D) * 20, color);
+	    data->pixelX += deltaX;
+	    data->pixelY += deltaY;
+	}
+	float distance = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2)) ;
+	// printf("%d\n", )
+	distance *=  cos((ray - data->rotation_angle));
+	float projectionplane = (WINDOW_WIDTH / 2) / tan((64 * (PI / 180)) / 2);
+	data->wall = (data->i_2D / distance) * projectionplane;
+
+}
+
 void	render_player(t_cub *data, int r)
 {
-	float	angle;
-	float	x1;
-	float	y1;
+	double	angle;
+	double	x1;
+	double	y1;
 	angle = 0;
+	(void)data;
 	while (angle < 360)
 	{
 		x1 = r * cos(angle * PI / 180);
 		y1 = r * sin(angle * PI / 180);
-		pixel_put(&data->img_3D, ((data->xpos / data->i_2D) * 20) + x1, ((data->ypos / data->i_2D) * 20) + y1, 0x40E0D0);
+		pixel_put(&data->img_3D, (data->xpos / data->i_2D) * 20 + x1, (data->ypos / data->i_2D) * 20 + y1, 0x40E0D0);
 		angle += 0.01;
 	}
 }
@@ -40,10 +56,10 @@ void	render_square(t_cub *data, int x, int y, int color)
 
 	i = 0;
 	j = 0;
-	while(i < 50)
+	while(i < (20))
 	{
 		j = 0;
-		while (j < 50)
+		while (j < 20)
 		{
 			pixel_put(&data->img_3D, x + j, y + i, color);
 			j++;
@@ -52,27 +68,46 @@ void	render_square(t_cub *data, int x, int y, int color)
 	}
 }
 
+void	render_fov(t_cub *data)
+{
+	double	x;
+	double	l;
+
+	x = -PI/6;
+	l = data->rotation_angle;
+	double xx, y;
+	xx = (data->xpos);
+	y = (data->ypos);
+	while (x < PI/6)
+	{
+		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0xCCC899, 1, 0);
+		x += 0.06 / 50;
+	}
+	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080, 1, 0);
+}
+
 void	render_map(t_cub *data)
 {
 	int i;
 	int j;
 
 	j = 0;
+	raycasting(data);
 	while (data->map[j])
 	{
 		i = 0;
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == '1')
-				render_square(data, 50 * i,50 * j, 0x3F4A4F);
-			else if (data->map[j][i] == '0')
-				render_square(data, 50 * i,50 * j, 0xFFFFFF);
+				render_square(data,  20 * i, 20 * j, 0x3F4A4F);
+			else 
+				render_square(data,  20 * i, 20 * j, 0xFFFFFF);
 			i++;
 		}
 		j++;
 	}
-	render_player(data, 8);
-	// castAllRays(data);
+	render_player(data, 5);
+	render_fov(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
 	// mlx_destroy_image(data->mlx, data->img_3D.mlx_img);
 }
