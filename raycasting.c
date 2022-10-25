@@ -39,11 +39,11 @@ void    raycasting(t_cub *data)
         if(x <= 32)
         {
             render_line(data, (data->xpos + cos(r + x) * 1000) - data->xpos,
-                (data->ypos +  sin(r + x) * 1000) - data->ypos, 0xF96dFF, 0, x + r);
-            x+= 0.064 / 50;
+                (data->ypos +  sin(r + x) * 1000) - data->ypos, 0xF96dFF, 0, r+x);
+            x+= 0.001;
         }
         j = 0;
-        while(j < WINDOW_HEIGHT )
+        while(j < WINDOW_HEIGHT)
         {
             if (j < (WINDOW_HEIGHT - data->wall) / 2)
                 pixel_put(&data->img_3D, i, j, 0xFFFFFF);
