@@ -40,14 +40,20 @@ void    raycasting(t_cub *data)
         {
             render_line(data, (data->xpos + cos(r + x) * 1000) - data->xpos,
                 (data->ypos +  sin(r + x) * 1000) - data->ypos, 0xF96dFF, 0, r+x);
-            x+= 0.001;
+            x+= (64 * (PI / 180)) / WINDOW_WIDTH;
         }
         j = 0;
+        // data->tex.texX = i / data->i_2D;
         while(j < WINDOW_HEIGHT)
         {
             if (j < (WINDOW_HEIGHT - data->wall) / 2)
                 pixel_put(&data->img_3D, i, j, 0xFFFFFF);
             else if (j < ((WINDOW_HEIGHT - data->wall) / 2) + data->wall)
+            // {
+            //     data->tex.texY = (j - ((((WINDOW_HEIGHT - data->wall) / 2))) + data->wall)/ data->i_2D;
+            //     pixel_put(&data->img_3D, i, j, get_pixel_color(&data->tex));
+            //     data->tex.texY++;
+            // }
                 wall_projection(data, i, j);
             else
                 pixel_put(&data->img_3D, i, j, 0x8D5524);
@@ -56,3 +62,42 @@ void    raycasting(t_cub *data)
         i++;
     }
 }
+
+
+// void    raycasting(t_cub *data)
+// {
+//     int i = 0;
+//     int j;
+//     double x  = - PI / 6;
+//     double l = data->rotation_angle;
+//     // double step = 1.0 * data->i_2D/ data->wall;
+//     // double tex;
+//     // double wall_x;
+//     while (i < WINDOW_WIDTH)
+//     {
+//         // if (data->side == 0)
+//         //     wall_x = data->ypos + data->player_dis * data->pixelY;
+//         // else
+//         //     wall_x = data->xpos + data->player_dis * data->pixelX;
+//         data->tex.texX = i / data->i_2D;
+//         j = 0;
+//         if ( x < PI / 6 && x != 0)
+//             render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
+//         while(j < WINDOW_HEIGHT)
+//         {
+//             if (j < (WINDOW_HEIGHT - data->wall)  / 2)
+//                 pixel_put(&data->img_3D, i, j, 0xFFFFFF);
+//             else if (j < ((WINDOW_HEIGHT - data->wall) / 2) + data->wall)
+//             {
+//                 data->tex.texY = (j - (((WINDOW_HEIGHT - data->wall) / 2))) / data->i_2D;
+//                 pixel_put(&data->img_3D, i, j, get_pixel_color(&data->tex));
+//                 data->tex.texY++;
+//             }
+//             else
+//                 pixel_put(&data->img_3D, i, j, 0x8D5524);
+//             j++;
+//         }
+//         i++;
+//         x+= 0.001;
+//     }
+// }
