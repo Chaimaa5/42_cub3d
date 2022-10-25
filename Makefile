@@ -35,5 +35,6 @@ fclean: clean
 	rm -f cub3d
 	rm -f $(LIBFT_A)
 	rm -f inc/libft/libft.a 
+	rm -f libft.a
 
 re : fclean all
