@@ -60,35 +60,19 @@ void player_pos_2D(t_cub *data)
 	}
 }
 
-void	pixel_put(t_img *data, int x, int y, int color)
-{
-	char	*dst;
-	dst = data->addr + (y * data->line + x * (data->bpp / 8));
-	*(int*)dst = color;
-}
-
-int	get_pixel_color(t_texture *tex)
-{
-	return ((int)tex->img.addr + (tex->texY * tex->img.line + tex->texX * (tex->img.bpp / 8)));
-}
-
-
 void	window(t_cub *data)
 {
 	int		i;
 	int		j;
-	int		x;
-	int		y;
+	
 	j = 0;
 	i = ft_strlen(data->map[0]);
-	char	*path = "bluestone.xpm";
 	data->i_2D = 50;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d!");
 	data->img_3D.mlx_img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->img_3D.addr = mlx_get_data_addr(data->img_3D.mlx_img, &data->img_3D.bpp, &data->img_3D.line, &data->img_3D.endian);
-	data->tex.texture = mlx_xpm_file_to_image(data->mlx, path, &x, &y);
-	data->tex.img.addr =  mlx_get_data_addr(data->tex.texture, &data->tex.img.bpp, &data->tex.img.line, &data->tex.img.endian);
+	load_texture(data);
 	player_pos_2D(data);
 	render_map(data);
 	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);

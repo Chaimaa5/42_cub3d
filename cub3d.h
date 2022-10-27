@@ -24,16 +24,22 @@ typedef struct   s_img{
     int     line;
 }   t_img;
 
-typedef struct  s_texture{
+typedef struct   s_tex_img{
     void    *texture;
+    unsigned int    *addr;
+    int     endian;
+    int     bpp;
+    int     line;
+}   t_tex_img;
+
+typedef struct  s_texture{
     int     texX;
     int     texY;
     double  step;
     double  texPos;
-    t_img   img;
-    
+    t_tex_img   img[4];
 }   t_texture;
-double g_i;
+
 typedef struct s_cub{
     void	*mlx;
     void	*mlx_win;
@@ -72,5 +78,6 @@ void player_pos(t_cub *data);
 int check_wall_collision_2D(t_cub *data);
 int	get_pixel_color(t_texture *tex);
 int     key_handler(int key, t_cub *data);
+void	load_texture(t_cub *data);
 
 #endif

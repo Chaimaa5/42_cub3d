@@ -80,10 +80,10 @@ void	render_fov(t_cub *data)
 	y = (data->ypos);
 	while (x < PI/6)
 	{
-		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0xCCC899, 1, 0);
+		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0x0000FF, 1, 0);
 		x += 0.06 / 50;
 	}
-	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080, 1, 0);
+	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xCCC899, 1, 0);
 }
 
 void	render_map(t_cub *data)
@@ -106,7 +106,7 @@ void	render_map(t_cub *data)
 		}
 		j++;
 	}
-	render_player(data, 5);
+	render_player(data, 1);
 	render_fov(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
 	// mlx_destroy_image(data->mlx, data->img_3D.mlx_img);

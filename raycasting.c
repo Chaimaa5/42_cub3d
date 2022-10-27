@@ -2,29 +2,15 @@
 
 int direction(t_cub *data)
 {
-    int dir;
-
     if(data->map[(((int)data->pixelY + 1) / data->i_2D)][((int)data->pixelX / data->i_2D)] == '0')
-        dir = 1;
+        data->tex.texPos = 1;
     if(data->map[((int)data->pixelY / data->i_2D)][(((int)data->pixelX + 1) / data->i_2D)] == '0')
-        dir = 2;
+        data->tex.texPos = 2;    
     if(data->map[(((int)data->pixelY - 1) / data->i_2D)][((int)data->pixelX / data->i_2D)] == '0')
-        dir = 3;
+        data->tex.texPos = 3;
     if(data->map[((int)data->pixelY / data->i_2D)][(((int)data->pixelX - 1) / data->i_2D)] == '0')
-        dir = 4;
-    return(dir);
-}
-
-void    wall_projection(t_cub *data, int i, int j)
-{
-    if (direction(data) == 1)
-        pixel_put(&data->img_3D, i, j, 0xE0AC69);
-    if (direction(data) == 2)
-        pixel_put(&data->img_3D, i, j, 0xE0AC69);
-    if (direction(data) == 3)
-        pixel_put(&data->img_3D, i, j, 0xF1C27D);
-    if (direction(data) == 4)
-        pixel_put(&data->img_3D, i, j, 0xFFDBAC);
+        data->tex.texPos = 4;
+    return(data->tex.texPos);
 }
 
 void    raycasting(t_cub *data)
@@ -37,67 +23,25 @@ void    raycasting(t_cub *data)
     while (i < WINDOW_WIDTH )
     {
         if(x <= 32)
-        {
             render_line(data, (data->xpos + cos(r + x) * 1000) - data->xpos,
                 (data->ypos +  sin(r + x) * 1000) - data->ypos, 0xF96dFF, 0, r+x);
-            x+= (64 * (PI / 180)) / WINDOW_WIDTH;
-        }
         j = 0;
-        // data->tex.texX = i / data->i_2D;
         while(j < WINDOW_HEIGHT)
         {
+            if (direction(data) == 1 || direction(data) == 3)
+                data->tex.texX = fmod(data->pixelX / 50, 1) * 50;
+            if (direction(data) == 2 || direction(data) == 4)
+                data->tex.texX = fmod(data->pixelY / 50, 1) * 50;
+            data->tex.texY = ((j - ((WINDOW_HEIGHT - data->wall) / 2)) * 50) / data->wall;
             if (j < (WINDOW_HEIGHT - data->wall) / 2)
                 pixel_put(&data->img_3D, i, j, 0xFFFFFF);
             else if (j < ((WINDOW_HEIGHT - data->wall) / 2) + data->wall)
-            // {
-            //     data->tex.texY = (j - ((((WINDOW_HEIGHT - data->wall) / 2))) + data->wall)/ data->i_2D;
-            //     pixel_put(&data->img_3D, i, j, get_pixel_color(&data->tex));
-            //     data->tex.texY++;
-            // }
-                wall_projection(data, i, j);
+                pixel_put(&data->img_3D, i, j, get_pixel_color(&data->tex));
             else
                 pixel_put(&data->img_3D, i, j, 0x8D5524);
             j++;
         }
         i++;
+        x+= (64 * (PI / 180)) / WINDOW_WIDTH;
     }
 }
-
-
-// void    raycasting(t_cub *data)
-// {
-//     int i = 0;
-//     int j;
-//     double x  = - PI / 6;
-//     double l = data->rotation_angle;
-//     // double step = 1.0 * data->i_2D/ data->wall;
-//     // double tex;
-//     // double wall_x;
-//     while (i < WINDOW_WIDTH)
-//     {
-//         // if (data->side == 0)
-//         //     wall_x = data->ypos + data->player_dis * data->pixelY;
-//         // else
-//         //     wall_x = data->xpos + data->player_dis * data->pixelX;
-//         data->tex.texX = i / data->i_2D;
-//         j = 0;
-//         if ( x < PI / 6 && x != 0)
-//             render_line(data,(data->xpos + cos(l + x) * 1000) - data->xpos,(data->ypos + sin(l + x) * 1000) - data->ypos,  0x40E0D0);
-//         while(j < WINDOW_HEIGHT)
-//         {
-//             if (j < (WINDOW_HEIGHT - data->wall)  / 2)
-//                 pixel_put(&data->img_3D, i, j, 0xFFFFFF);
-//             else if (j < ((WINDOW_HEIGHT - data->wall) / 2) + data->wall)
-//             {
-//                 data->tex.texY = (j - (((WINDOW_HEIGHT - data->wall) / 2))) / data->i_2D;
-//                 pixel_put(&data->img_3D, i, j, get_pixel_color(&data->tex));
-//                 data->tex.texY++;
-//             }
-//             else
-//                 pixel_put(&data->img_3D, i, j, 0x8D5524);
-//             j++;
-//         }
-//         i++;
-//         x+= 0.001;
-//     }
-// }
