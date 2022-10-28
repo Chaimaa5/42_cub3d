@@ -10,12 +10,12 @@
 #include "mlx_keys.h"
 
 #define PI 3.1415926535
-#define PI2 1.5708 //pi/2
-#define PI3 4.71239 //3pi/2
+#define PI2 1.5708
+#define PI3 4.71239
 #define WINDOW_WIDTH 1080
 #define WINDOW_HEIGHT 720
-#define RAYS 1600 / 4
 #define FOV 64 * (PI / 2)
+
 typedef struct   s_img{
     void    *mlx_img;
     char    *addr;
@@ -25,11 +25,11 @@ typedef struct   s_img{
 }   t_img;
 
 typedef struct   s_tex_img{
-    void    *texture;
+    void			*texture;
     unsigned int    *addr;
-    int     endian;
-    int     bpp;
-    int     line;
+    int				endian;
+    int				bpp;
+    int				line;
 }   t_tex_img;
 
 typedef struct  s_texture{
@@ -52,9 +52,8 @@ typedef struct s_cub{
 	double	move_speed;
 	double	rotation_speed;
     double  move_step;
-    char    direction;
-    double  wall_height;
     double  player_dis;
+    double  projection_plane;
     double  wall;
     int     i_2D;
     double  pixelX;
@@ -64,7 +63,7 @@ typedef struct s_cub{
 }   t_cub;
 
 
-void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c, double x);
+void	render_line(t_cub *data, double deltaX, double deltaY, double x, int c);
 void	render_player(t_cub *data, int r);
 void	render_square(t_cub *data, int x, int y, int color);
 void	render_map(t_cub *data);
@@ -74,9 +73,9 @@ void	check_map(char **map);
 int     check_wall_collision(t_cub *data);
 void	pixel_put(t_img *img, int x, int y, int color);
 void    raycasting(t_cub *data);
-void player_pos(t_cub *data);
-int check_wall_collision_2D(t_cub *data);
-int	get_pixel_color(t_texture *tex);
+void	player_pos(t_cub *data);
+int		check_wall_collision_2D(t_cub *data);
+int		get_pixel_color(t_texture *tex);
 int     key_handler(int key, t_cub *data);
 void	load_texture(t_cub *data);
 

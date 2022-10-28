@@ -37,6 +37,7 @@ void    move_right(t_cub *data)
 	data->rotation_angle += data->side * data->rotation_speed;
 	render_map(data);
 }
+
 int key_handler(int key, t_cub *data)
 {
 	if (key == KEY_UP)

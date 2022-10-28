@@ -1,12 +1,11 @@
 #include "cub3d.h"
 
-
 void	load_texture(t_cub *data)
 {
-	char	*path = "pink.xpm";
-	char	*path2 = "bluestone.xpm";
-	char	*path3 = "BlackWall.xpm";
-	char	*path4 = "black.xpm";
+	char	*path = "xpm/eagle.xpm";
+	char	*path2 = "xpm/bluestone.xpm";
+	char	*path3 = "xpm/BlackWall.xpm";
+	char	*path4 = "xpm/purplestone.xpm";
 	int		x;
 	int		y;
 
@@ -19,6 +18,7 @@ void	load_texture(t_cub *data)
 	data->tex.img[3].texture = mlx_xpm_file_to_image(data->mlx, path4, &x, &y);
 	data->tex.img[3].addr =  (unsigned int *)mlx_get_data_addr(data->tex.img[3].texture, &data->tex.img[3].bpp, &data->tex.img[3].line, &data->tex.img[3].endian);
 }
+
 void	pixel_put(t_img *data, int x, int y, int color)
 {
 	char	*dst;
