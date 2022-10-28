@@ -95,5 +95,4 @@ void	render_map(t_cub *data)
 	render_player(data, 1);
 	render_fov(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
-	// mlx_destroy_image(data->mlx, data->img_3D.mlx_img);
 }

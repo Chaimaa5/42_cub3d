@@ -40,6 +40,11 @@ void    move_right(t_cub *data)
 
 int key_handler(int key, t_cub *data)
 {
+	if (key == KEY_ESC)
+	{
+		mlx_destroy_image(data->mlx, data->img_3D.mlx_img);
+		exit(0);
+	}
 	if (key == KEY_UP)
         move_up(data);
 	else if (key == KEY_DOWN)

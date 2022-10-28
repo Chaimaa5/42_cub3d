@@ -60,6 +60,14 @@ void player_pos_2D(t_cub *data)
 	}
 }
 
+int	mouse(t_cub *data)
+{
+	mlx_destroy_image(data->mlx, data->img_3D.mlx_img);
+	mlx_destroy_window(data->mlx, data->mlx_win);
+	exit(0);
+	return (0);
+}
+
 void	window(t_cub *data)
 {
 	int		i;
@@ -76,6 +84,7 @@ void	window(t_cub *data)
 	player_pos_2D(data);
 	render_map(data);
 	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
+	mlx_hook(data->mlx_win, 17, 0L, mouse, data);
 	mlx_loop(data->mlx);
 }
 
