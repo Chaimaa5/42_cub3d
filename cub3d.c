@@ -96,8 +96,9 @@ int main(int ac, char **av)
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
-		data.map = read_map(fd);
-		check_map(data.map);
-		window(&data);
+		data.file = read_map(fd);
+		if(data.file && check_elements(&data))
+			window(&data);
+		// printf("rigola\n");
 	}
 }

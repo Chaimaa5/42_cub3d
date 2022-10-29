@@ -23,54 +23,312 @@ int check_wall_collision_2D(t_cub *data)
 		return(0);
 	return(1);
 }
-int	check_wall(char **map)
+
+
+int set_xmp(char *xpm, t_cub *data, int x)
 {
-	int	i;
+	int i;
+	int y;
+	y = 0;
+	i = 0;
+	while(xpm[i] && xpm[i] != '.')
+	{
+		if((xpm[i] >= 'A' && xpm[i + 1] <= 'W') || xpm[i] == ' ')
+			i++;
+		if(xpm[i] != '.')
+			i++;
+	}
+	y = ft_strlen(xpm) - 1;
+	if(i >= y)
+		return(7);
+	while(xpm[y] == ' ')
+		y--;
+	if(!y || data->xpm_file[x])
+		return(7);
+	data->xpm_file[x] = ft_substr(xpm, i, y - i + 1);
+	return(1);
+}
+
+int check_nb(char *color)
+{
+	int i;
+	int x;
+
+	x = 0;
+	i = 0;
+	while(color[i])
+	{
+		if(color[i] == ',' && ft_isdigit(color[i + 1]) && ft_isdigit(color[i - 1]))
+			x++;
+		i++;
+	}
+	if(x != 2)
+		return(0);
+	return(1);
+}
+
+int set_color(t_cub *data, char *color, char c)
+{
+	int i;
+	int x;
+	char *nb;
+
+	i = 0;
+	x = ft_strlen(color) - 1;
+	while(!ft_isdigit(color[i]) && color[i])
+		i++;
+	if(i >= x || color[i - 1] != ' ')
+		return(7);
+	while(color[x] == ' ')
+		x--;
+	nb = ft_substr(color, i, x - i + 1);
+	if(!check_nb(nb))
+		return(7);
+	if(c == 'F')
+		data->F_color = ft_split(nb, ',');
+	else if(c == 'C')
+		data->C_color = ft_split(nb, ',');
+	return(1);
+}
+
+int check_all(t_cub *data)
+{
+	int i;
+	int j;
+	int x;
+
+	x = -1; 
+	i = 0;
+	j = 0;
+	data->xpm_file = malloc(sizeof(char *) * 5);
+	data->xpm_file[4] = NULL;
+	while(data->xpm_file[++x])
+		data->xpm_file[x] = NULL;
+	x = 0;
+	data->F_color = malloc(sizeof(char *) * 4);
+	data->C_color = malloc(sizeof(char *) * 4);
+	while(data->file[j])
+	{
+		while(data->file[j][i] == ' ')
+			i++;
+		if(data->file[j][i] == 'N' && data->file[j][i + 1] == 'O' && data->file[j][i + 2] == ' ')
+			x += set_xmp(data->file[j], data, 0);
+		else if(data->file[j][i] == 'S' && data->file[j][i + 1] == 'O' && data->file[j][i + 2] == ' ')
+			x += set_xmp(data->file[j], data, 1);
+		else if(data->file[j][i] == 'W' && data->file[j][i + 1] == 'E' && data->file[j][i + 2] == ' ')
+			x += set_xmp(data->file[j], data, 2);
+		else if(data->file[j][i] == 'E' && data->file[j][i + 1] == 'A' && data->file[j][i + 2] == ' ')
+			x += set_xmp(data->file[j], data, 3);
+		else if(data->file[j][i] == 'F' && data->file[j][i + 1] == ' ')
+			x += set_color(data, data->file[j], 'F');
+		else if(data->file[j][i] == 'C' && data->file[j][i + 1] == ' ')
+			x += set_color(data, data->file[j], 'C');
+		i = 0;
+		j++;
+	}
+	if(x != 6)
+		return(0);
+	return(1);
+}
+
+int check_textures(t_cub *data)
+{
+	int i;
+	int x;
+	i = 0;
+	x = 0;
+	while(data->xpm_file[i])
+	{
+		x = ft_strlen(data->xpm_file[i]) - 1;
+		if(data->xpm_file[i][x] != 'm' || data->xpm_file[i][x - 1] != 'p' 
+			|| data->xpm_file[i][x - 2] != 'x' || data->xpm_file[i][x - 3] != '.')
+		return(0);
+		i++;
+	}
+	return (1);
+}
+
+int check_zero(char **map, int j, int i)
+{
+	if(ft_strlen(map[j + 1]) <= (size_t)i || ft_strlen(map[j - 1]) <= (size_t)i)
+		return(0);
+	if(map[j][i + 1] == ' ' || map[j][i - 1] == ' ')
+		return(0);
+	if(map[j - 1][i] == ' ' || map[j + 1][i] == ' ')
+		return(0);
+	return(1);
+}
+
+int check_spaces(char **map)
+{
+	int i;
+	int j;
+	j = 0;
+	while(map[j])
+	{
+		i = 0;
+		while(map[j][i])
+		{
+			if(map[j][i] == '0' || map[j][i] == 'N' || map[j][i] == 'W'
+				|| map[j][i] == 'S' || map[j][i] == 'E')
+			{
+				if(!check_zero(map, j, i))
+					return(0);
+			}
+			i++;
+		}
+		j++;
+	}
+	return(1);
+}
+
+int is_close(char **map)
+{
+	int i;
+	int j;
+	i = 0;
+	j = 0;
+	while(map[0][i] && (map[0][i] == '1' || map[0][i] == ' '))
+		i++;
+	if((size_t)i != ft_strlen(map[0]))
+		return(0);
+	i = 0;
+	while(map[j])
+	{
+		while(map[j][i] == ' ')
+			i++;
+		if(map[j][i] != '1' && map[j][ft_strlen(map[j]) - 1] != '1')
+			return(0);
+		i = 0;
+		j++;
+	}
+	i = 0;
+	while(map[j - 1][i] && (map[j - 1][i] == '1' || map[j - 1][i] == ' '))
+		i++;
+	if((size_t)i != ft_strlen(map[j - 1]))
+		return(0);
+	if(!check_spaces(map))
+		return(0);
+	return(1);
+}
+
+int check_player(char **map)
+{
+	int i;
+	int j;
+	int x;
+
+	x = 0;
+	i = -1;
+	j = -1;
+	while(map[++j])
+	{
+		i = -1;
+		while(map[j][++i])
+		{
+			if(map[j][i] != '1' && map[j][i] != ' ' && map[j][i] != '0')
+			{
+				x++;
+				if(map[j][i] != 'N' && map[j][i] != 'S' 
+					&& map[j][i] != 'W' && map[j][i] != 'E')
+					return(0);
+			}
+		}
+	}
+	if(x != 1)
+		return(0);
+	return(1);
+}
+
+int check_walls(char **map)
+{
+	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-			j++;
-		if (map[i][0] != '1' || map[i][j - 1] != '1')
-			return (1);
-		i++;
-	}
-	return (0);
+	if(!check_player(map))
+		return(0);
+	if(!is_close(map))
+		return(0);
+	return(1);
 }
 
-int	check_elements(char **map)
+int check_map(t_cub *data)
+{
+	int i;
+	int x;
+	i = 0;
+	x = 0;
+	while(data->file[i])
+		i++;
+	data->map = malloc(sizeof(char *) * (i - 5));
+	data->map[i - 6] = NULL;
+	i = 6;
+	while(data->file[i])
+		data->map[x++] = ft_strdup(data->file[i++]);
+	if(!check_walls(data->map))
+		return(0);
+	return(1);
+}
+
+int check_colors(t_cub *data)
+{
+	int i;
+	i = 0;
+	if(!data->C_color || !data->F_color)
+		return (0);
+	while(data->C_color[i] && data->F_color[i])
+	{
+		if(ft_atoi(data->C_color[i]) > 250 
+			|| ft_atoi(data->F_color[i]) > 250 
+			|| ft_strlen(data->C_color[i]) > 3
+			|| ft_strlen(data->F_color[i]) > 3)
+			return(0);
+		i++;
+	}
+	return (1);
+
+}
+
+int	check_elements(t_cub *data)
 {
 	int	i;
 	int	x;
 
 	i = 0;
 	x = 0;
-	while (map[i])
-	{
-		x = 0;
-		while (map[i][x])
-		{
-			if (map[i][x] != '1' && map[i][x] != '0' && map[i][x] != 'N' && map[i][x] != ' '
-				&& map[i][x] != 'S' && map[i][x] != 'E' && map[i][x] != 'W')
-				return (1);
-			x++;
-		}
-		i++;
-	}
-	return (0);
+	if(!check_all(data))
+		return (0);
+	if(!check_textures(data))
+		return (0);
+	if(!check_colors(data))
+		return (0);
+	if(!check_map(data))
+		return(0);
+	return (1);
 }
 
-void	check_map(char **map)
+int check_new_line(char *map, char *line)
 {
-	if (check_elements(map) || check_wall(map))
+	int i;
+	int x;
+	x = 0;
+	i = ft_strlen(map) - 2;
+	if(line[0] == '\n')
 	{
-		write(2, "not valid\n", 11);
-		exit(0);
+		while(i && map[i] == ' ')
+			i--;
+		x = i;
+		while(i && map[i] != '\n')
+			i--;
+		i++;
+		while(map[i] && map[i] == ' ')
+			i++;
+		if(map[x] == '1' && map[i] == '1')
+			return(0);
 	}
+	return(1);
 }
 
 char	**read_map(int i)
@@ -85,12 +343,18 @@ char	**read_map(int i)
 	map = get_next_line(i);
 	while (map)
 	{
+		if(!check_new_line(mapp, map))
+			return(NULL);
 		mapp = ft_strjoin(mapp, map);
 		free(map);
 		map = get_next_line(i);
 		y++;
 	}
 	p = ft_split(mapp, '\n');
+	if(ft_strlen(mapp) <= 2)
+		return(NULL);
+	if(mapp[ft_strlen(mapp) - 1] == '\n')
+		return(NULL);
 	free(mapp);
 	return (p);
 }
