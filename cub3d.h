@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 22:09:03 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/10/31 22:09:56 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/01 15:38:21 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,10 @@ void	render_map(t_cub *data);
 char	**read_map(int i);
 int		check_elements(t_cub *data);
 int		check_map(t_cub *data);
-int		check_wall_collision(t_cub *data);
+int		player_hitwall(t_cub *data, int key);
 void	pixel_put(t_img *img, int x, int y, int color);
 void	raycasting(t_cub *data);
 void	player_pos(t_cub *data);
-int		check_wall_collision_2D(t_cub *data);
 int		get_pixel_color(t_texture *tex);
 int		key_handler(int key, t_cub *data);
 void	move_right_left(t_cub *data, int key);
@@ -106,5 +105,6 @@ int		check_colors(t_cub *data);
 double	player_distance(t_cub *data, double angle);
 double	projection_plane(void);
 double	wall_height(t_cub *data);
+int		side_wall_collision(t_cub *data);
 
 #endif

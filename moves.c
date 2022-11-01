@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:08 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/10/31 21:23:08 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/01 15:39:17 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	move_up(t_cub *data)
 {
 	data->walk = 1;
 	data->move_step = data->walk * data->move_speed;
-	if (check_wall_collision(data))
+	if (player_hitwall(data, KEY_UP))
 	{
 		data->xpos += cos(data->rotation_angle) * data->move_step;
 		data->ypos += sin(data->rotation_angle) * data->move_step;
@@ -28,7 +28,7 @@ void	move_down(t_cub *data)
 {
 	data->walk = -1;
 	data->move_step = data->walk * data->move_speed;
-	if (check_wall_collision(data))
+	if (player_hitwall(data, KEY_DOWN))
 	{
 		data->xpos += cos(data->rotation_angle) * data->move_step;
 		data->ypos += sin(data->rotation_angle) * data->move_step;
@@ -52,15 +52,15 @@ void	rotate_right(t_cub *data)
 
 void	move_right_left(t_cub *data, int key)
 {
-	if (key == KEY_RIGHT)
+	if (key == KEY_D)
 		data->walk = 1;
 	else
 		data->walk = -1;
 	data->move_step = data->walk * data->move_speed;
-	if (check_wall_collision(data))
+	if (player_hitwall(data, key))
 	{
-			data->xpos += cos(data->rotation_angle + 1.57) * data->move_step;
-			data->ypos += sin(data->rotation_angle + 1.57) * data->move_step;
+		data->xpos += cos(data->rotation_angle + 1.57) * data->move_step;
+		data->ypos += sin(data->rotation_angle + 1.57) * data->move_step;
 		render_map(data);
 	}
 }
