@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:12 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/01 17:23:52 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/02 22:46:28 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,15 @@ int	player_hitwall(t_cub *data, int key)
 		i = data->xpos + cos(data->rotation_angle) * data->move_step;
 		j = data->ypos + sin(data->rotation_angle) * data->move_step;
 	}
-	if (data->map[j / data->i_2d][i / data->i_2d] == '0' && 
+	if (data->map[j / data->i_2d][i / data->i_2d] == '0' &&
 	(((data->map[j / data->i_2d][(i - 1) / data->i_2d] != '1') &&
-		(data->map[(j + 1) / data->i_2d][i / data->i_2d] != '1'))) && 
+		(data->map[(j + 1) / data->i_2d][i / data->i_2d] != '1'))) &&
 	(((data->map[j / data->i_2d][(i + 1) / data->i_2d] != '1') &&
-		(data->map[(j - 1) / data->i_2d][i / data->i_2d] != '1'))))
+		(data->map[(j - 1) / data->i_2d][i / data->i_2d] != '1'))) &&
+		(((data->map[(j - 1) / data->i_2d][(i + 1) / data->i_2d] != '1') &&
+		(data->map[j / data->i_2d][i / data->i_2d] != '1'))) &&
+		(((data->map[(j - 1) / data->i_2d][i / data->i_2d] != '1') &&
+		(data->map[j / data->i_2d][(i - 1) / data->i_2d] != '1'))))
 		return (1);
 	return (0);
 }
@@ -52,33 +56,6 @@ int	side_wall_collision(t_cub *data)
 	j = data->ypos + sin(data->rotation_angle + 1.57) * data->move_step;
 	if (data->map[j / data->i_2d][i / data->i_2d] == '0')
 		return (1);
-	return (0);
-}
-
-double	check_direction(t_cub *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (data->map[j])
-	{
-		i = 0;
-		while (data->map[j][i])
-		{
-			if (data->map[j][i] == 'N')
-				return (PI / 2);
-			else if (data->map[j][i] == 'W')
-				return (PI);
-			else if (data->map[j][i] == 'S')
-				return (PI3);
-			else if (data->map[j][i] == 'E')
-				return (0);
-			i++;
-		}
-		j++;
-	}
 	return (0);
 }
 

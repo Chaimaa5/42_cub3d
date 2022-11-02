@@ -6,22 +6,41 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:15 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/10/31 22:05:28 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/02 21:42:29 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	rgb_to_color(char **color)
+int	long_line(t_cub *data)
 {
-	int	r;
-	int	g;
-	int	b;
+	int	i;
+	int	j;
+	int	x;
 
-	r = atoi(color[0]);
-	g = atoi(color[1]);
-	b = atoi(color[2]);
-	return (((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff));
+	x = 0;
+	i = 0;
+	j = 0;
+	while (data->map[j])
+	{
+		i = ft_strlen(data->map[j]);
+		if (i > x)
+			x = i;
+		j++;
+	}
+	if (x < j)
+		return (j);
+	return (x);
+}
+
+int	rgb_to_color(t_cub *data, char c)
+{
+	if (c == 'C')
+		return (((data->colors.r_c & 0xff) << 16)
+			+ ((data->colors.g_c & 0xff) << 8) + (data->colors.b_c & 0xff));
+	else
+		return (((data->colors.r_f & 0xff) << 16)
+			+ ((data->colors.g_f & 0xff) << 8) + (data->colors.b_f & 0xff));
 }
 
 int	direction(t_cub *data)
@@ -57,11 +76,11 @@ void	wall_projection(t_cub *data, int i)
 			data->tex.tex_x = fmod(data->pixely / 50, 1) * 50;
 		data->tex.tex_y = ((j - toppix) * 50) / data->wall;
 		if (j < (WINDOW_HEIGHT - data->wall) / 2)
-			pixel_put(&data->img_3d, i, j, rgb_to_color(data->c_color));
+			pixel_put(&data->img_3d, i, j, rgb_to_color(data, 'C'));
 		else if (j < ((WINDOW_HEIGHT - data->wall) / 2) + data->wall)
 			pixel_put(&data->img_3d, i, j, get_pixel_color(&data->tex));
 		else
-			pixel_put(&data->img_3d, i, j, rgb_to_color(data->f_color));
+			pixel_put(&data->img_3d, i, j, rgb_to_color(data, 'F'));
 		j++;
 	}
 }

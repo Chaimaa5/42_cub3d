@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   moves.c                                            :+:      :+:    :+:   */
+/*   Moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:08 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/01 15:39:17 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/02 21:45:46 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	move_up(t_cub *data)
 {
 	data->walk = 1;
 	data->move_step = data->walk * data->move_speed;
-	if (player_hitwall(data, KEY_UP))
+	if (player_hitwall(data, KEY_W))
 	{
 		data->xpos += cos(data->rotation_angle) * data->move_step;
 		data->ypos += sin(data->rotation_angle) * data->move_step;
@@ -28,7 +28,7 @@ void	move_down(t_cub *data)
 {
 	data->walk = -1;
 	data->move_step = data->walk * data->move_speed;
-	if (player_hitwall(data, KEY_DOWN))
+	if (player_hitwall(data, KEY_S))
 	{
 		data->xpos += cos(data->rotation_angle) * data->move_step;
 		data->ypos += sin(data->rotation_angle) * data->move_step;

@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:18 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/01 17:26:06 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/02 21:52:40 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	render_line(t_cub *data, double angle, int ray)
 	while (hitwall(data, data->pixelx, data->pixely))
 	{	
 		if (!ray)
-			pixel_put(&data->img_3d, (data->pixelx / data->i_2d) * 20,
-				(data->pixely / data->i_2d) * 20, 0x0000FF);
+			pixel_put(&data->img_3d, (data->pixelx / data->i_2d) * angle,
+				(data->pixely / data->i_2d) * angle, 0x000000);
 		data->pixelx += data->deltax;
 		data->pixely += data->deltay;
 	}
@@ -37,7 +37,7 @@ void	render_line(t_cub *data, double angle, int ray)
 	data->wall = wall_height(data);
 }
 
-void	render_player(t_cub *data, int r)
+void	render_player(t_cub *data, int r, int x)
 {
 	double	angle;
 	double	x1;
@@ -48,61 +48,63 @@ void	render_player(t_cub *data, int r)
 	{
 		x1 = r * cos(angle * PI / 180);
 		y1 = r * sin(angle * PI / 180);
-		pixel_put(&data->img_3d, (data->xpos / data->i_2d) * 20 + x1,
-			(data->ypos / data->i_2d) * 20 + y1, 0x0000FF);
+		pixel_put(&data->img_3d, (data->xpos / data->i_2d) * x + x1,
+			(data->ypos / data->i_2d) * x + y1, 0x000000);
 		angle += 0.01;
 	}
 }
 
-void	render_square(t_cub *data, int x, int y, int color)
+void	render_square(t_cub *data, int x, int y, int xx)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	while (i < (20))
+	while (i < xx)
 	{
 		j = 0;
-		while (j < 20)
+		while (j < xx)
 		{
-			pixel_put(&data->img_3d, x + j, y + i, color);
+			pixel_put(&data->img_3d, x + j, y + i, 0x00);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	render_fov(t_cub *data)
+void	render_fov(t_cub *data, int x)
 {
 	double	l;
 
 	l = data->rotation_angle;
-	data->deltax = (data->xpos + cos(l) * 1000) - data->xpos;
-	data->deltay = (data->ypos + sin(l) * 1000) - data->ypos;
-	render_line(data, 0, 0);
+	data->deltax = ((data->xpos + cos(l) * 1000) - data->xpos);
+	data->deltay = ((data->ypos + sin(l) * 1000) - data->ypos);
+	render_line(data, x, 0);
 }
 
 void	render_map(t_cub *data)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	double	x;
 
 	j = 0;
 	raycasting(data);
+	x = (WINDOW_WIDTH) / (long_line(data) * 4);
 	while (data->map[j])
 	{
 		i = 0;
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == '1')
-				render_square(data, 20 * i, 20 * j, 0x3F4A4F);
+				render_square(data, x * i, x * j, x);
 			i++;
 		}
 		j++;
 	}
-	render_player(data, 1);
-	render_fov(data);
+	render_player(data, 4, x);
+	render_fov(data, x);
 	mlx_put_image_to_window(data->mlx,
 		data->mlx_win, data->img_3d.mlx_img, 0, 0);
 }

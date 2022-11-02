@@ -6,11 +6,38 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:21 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/10/31 22:05:28 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/02 20:56:38 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+double	check_direction(t_cub *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (data->map[j])
+	{
+		i = 0;
+		while (data->map[j][i])
+		{
+			if (data->map[j][i] == 'N')
+				return (PI / 2);
+			else if (data->map[j][i] == 'W')
+				return (PI);
+			else if (data->map[j][i] == 'S')
+				return (PI3);
+			else if (data->map[j][i] == 'E')
+				return (0);
+			i++;
+		}
+		j++;
+	}
+	return (0);
+}
 
 void	get_address(t_texture *tex)
 {
