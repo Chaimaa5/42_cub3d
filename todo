@@ -1,0 +1,6 @@
+mlx_get_data_address:
+line: number of bytes in a row of the image
+bpp: number of bytes for each pixel in the image
+endia: big or small
+
+mlx hook mask
