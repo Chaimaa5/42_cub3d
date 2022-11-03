@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:12 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/02 23:14:28 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:28:40 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,27 @@ int	hitwall(t_cub *data, double x, double y)
 	return (0);
 }
 
-int	player_hitwall(t_cub *data)
+int	player_hitwall(t_cub *data, int key)
 {
-	int	i = data->xpos;
-	int	j = data->ypos;
-	
-	if ((data->map[j / data->i_2d][(i - 1) / data->i_2d] == '1' 
+	int	i;
+	int	j;
+
+	if (key == KEY_A || key == KEY_D)
+	{
+		i = data->xpos + cos(data->rotation_angle + 1.57) * data->move_step;
+		j = data->ypos + sin(data->rotation_angle + 1.57) * data->move_step;
+	}
+	else
+	{
+		i = data->xpos + cos(data->rotation_angle) * data->move_step;
+		j = data->ypos + sin(data->rotation_angle) * data->move_step;
+	}
+	if ((data->map[j / data->i_2d][(i - 1) / data->i_2d] == '1'
 		&& data->map[(j + 1) / data->i_2d][i / data->i_2d] == '1')
-		|| (data->map[(j - 1) / data->i_2d][i / data->i_2d] == '1' 
+		|| (data->map[(j - 1) / data->i_2d][i / data->i_2d] == '1'
 		&& data->map[j / data->i_2d][(i + 1) / data->i_2d] == '1')
-		|| (data->map[(j - 1) / data->i_2d][i / data->i_2d] == '1' 
-		&& data->map[j / data->i_2d][(i + 1) / data->i_2d] == '1')
+		|| (data->map[(j - 1) / data->i_2d][i / data->i_2d] == '1'
+		&& data->map[j / data->i_2d][(i + 1) / data->i_2d] == '1'))
 		return (0);
 	return (1);
 }

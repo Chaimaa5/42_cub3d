@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:18 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/02 21:52:40 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:18:43 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	render_map(t_cub *data)
 		}
 		j++;
 	}
-	render_player(data, 4, x);
+	render_player(data, 3, x);
 	render_fov(data, x);
 	mlx_put_image_to_window(data->mlx,
 		data->mlx_win, data->img_3d.mlx_img, 0, 0);

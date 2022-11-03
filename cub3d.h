@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 22:09:03 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/02 23:13:26 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:22:35 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	render_map(t_cub *data);
 char	**read_map(int i);
 int		check_elements(t_cub *data);
 int		check_map(t_cub *data);
-int		player_hitwall(t_cub *data);
+int		player_hitwall(t_cub *data, int key);
 void	pixel_put(t_img *img, int x, int y, int color);
 void	raycasting(t_cub *data);
 void	player_pos(t_cub *data);
