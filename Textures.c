@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:21 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/03 19:13:54 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:15:23 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	pixel_put(t_img *data, int x, int y, int color)
 
 	pixel = data->addr + (y * data->line + x * (data->bpp / 8));
 	*(int *)pixel = color;
-} 
+}
 
 int	get_pixel_color(t_texture *tex)
 {
