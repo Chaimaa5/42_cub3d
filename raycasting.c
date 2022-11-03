@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:15 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/03 15:55:13 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:38:05 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ int	long_line(t_cub *data)
 int	rgb_to_color(t_cub *data, char c)
 {
 	if (c == 'C')
-		return (((data->colors.r_c & 0xff) << 16)
-			+ ((data->colors.g_c & 0xff) << 8) + (data->colors.b_c & 0xff));
+		return (((data->colors.r_c) << 16)
+			+ ((data->colors.g_c) << 8) + (data->colors.b_c));
 	else
-		return (((data->colors.r_f & 0xff) << 16)
-			+ ((data->colors.g_f & 0xff) << 8) + (data->colors.b_f & 0xff));
+		return (((data->colors.r_f) << 16)
+			+ ((data->colors.g_f) << 8) + (data->colors.b_f));
 }
 
 int	direction(t_cub *data)
