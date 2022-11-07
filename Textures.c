@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:21 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/03 22:15:23 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:41:41 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ double	check_direction(t_cub *data)
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == 'N')
-				return (PI / 2);
+				return (PI3);
 			else if (data->map[j][i] == 'W')
 				return (PI);
 			else if (data->map[j][i] == 'S')
-				return (PI3);
+				return (PI / 2);
 			else if (data->map[j][i] == 'E')
 				return (0);
 			i++;
@@ -86,14 +86,14 @@ void	pixel_put(t_img *data, int x, int y, int color)
 int	get_pixel_color(t_texture *tex)
 {
 	if (tex->texpos == 1)
-		return (tex->img[0].addr[tex->img[0].line / (tex->img[0].bpp / 8)
-				* tex->tex_x + tex->tex_y]);
-	if (tex->texpos == 2)
 		return (tex->img[1].addr[tex->img[1].line / (tex->img[1].bpp / 8)
 				* tex->tex_x + tex->tex_y]);
-	if (tex->texpos == 3)
-		return (tex->img[2].addr[tex->img[2].line / (tex->img[2].bpp / 8)
+	if (tex->texpos == 4)
+		return (tex->img[3].addr[tex->img[3].line / (tex->img[3].bpp / 8)
 				* tex->tex_x + tex->tex_y]);
-	return (tex->img[3].addr[tex->img[3].line / (tex->img[3].bpp / 8)
+	if (tex->texpos == 3)
+		return (tex->img[0].addr[tex->img[0].line / (tex->img[0].bpp / 8)
+				* tex->tex_x + tex->tex_y]);
+	return (tex->img[2].addr[tex->img[2].line / (tex->img[2].bpp / 8)
 			* tex->tex_x + tex->tex_y]);
 }

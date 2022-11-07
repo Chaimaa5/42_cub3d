@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:58:26 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/03 21:10:45 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:03:33 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	key_handler(int key, t_cub *data)
 	if (key == KEY_ESC)
 	{
 		mlx_destroy_image(data->mlx, data->img_3d.mlx_img);
+		mlx_destroy_window(data->mlx, data->mlx_win);
 		ft_putendl_fd("EXIT", 1);
 		exit(0);
 	}

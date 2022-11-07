@@ -1,7 +1,7 @@
 NO ./xpm/north.xpm      
 SO ./xpm/south.xpm        
-WE ./xpm/west.xpm
-EA ./xpm/east.xpm
+WE ./xpm/greystone.xpm
+EA ./xpm/redbrick.xpm
 
 F 83,104,120      
 C        242,247,250    

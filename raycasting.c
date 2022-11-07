@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:15 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/03 16:46:13 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/04 13:16:11 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,13 @@ int	direction(t_cub *data)
 
 	x = data->pixelx / data->i_2d;
 	y = data->pixely / data->i_2d;
+	//north
 	if (data->map[((int)data->pixely + 1) / data->i_2d][x] == '0')
 		data->tex.texpos = 1;
+	//east
 	if (data->map[y][((int)data->pixelx + 1) / data->i_2d] == '0')
 		data->tex.texpos = 2;
+		//south
 	if (data->map[((int)data->pixely - 1) / data->i_2d][x] == '0')
 		data->tex.texpos = 3;
 	if (data->map[y][((int)data->pixelx - 1) / data->i_2d] == '0')

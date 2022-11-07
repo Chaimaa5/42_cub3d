@@ -6,17 +6,24 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:12 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/03 16:28:40 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:15:40 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	hitwall(t_cub *data, double x, double y)
+int	hitwall(t_cub *data, double i, double j)
 {
-	if (data->map[(int)y / data->i_2d][(int)x / data->i_2d] == '0')
-		return (1);
-	return (0);
+	if ((data->map[(int)j / data->i_2d][((int)i - 1) / data->i_2d] == '1'
+		&& data->map[((int)j - 1) / data->i_2d][(int)i / data->i_2d] == '1')
+		|| (data->map[((int)j - 1) / data->i_2d][(int)i / data->i_2d] == '1'
+		&& data->map[(int)j / data->i_2d][((int)i + 1) / data->i_2d] == '1')
+		|| (data->map[((int)j + 1) / data->i_2d][(int)i / data->i_2d] == '1'
+		&& data->map[(int)j / data->i_2d][((int)i + 1) / data->i_2d] == '1')
+		|| (data->map[((int)j) / data->i_2d][((int)i - 1)/ data->i_2d] == '1'
+		&& data->map[((int)j + 1) / data->i_2d][(int)i  / data->i_2d] == '1'))
+		return (0);
+	return (1);
 }
 
 int	player_hitwall(t_cub *data, int key)
@@ -34,13 +41,18 @@ int	player_hitwall(t_cub *data, int key)
 		i = data->xpos + cos(data->rotation_angle) * data->move_step;
 		j = data->ypos + sin(data->rotation_angle) * data->move_step;
 	}
-	if ((data->map[j / data->i_2d][(i - 1) / data->i_2d] == '1'
-		&& data->map[(j + 1) / data->i_2d][i / data->i_2d] == '1')
-		|| (data->map[(j - 1) / data->i_2d][i / data->i_2d] == '1'
-		&& data->map[j / data->i_2d][(i + 1) / data->i_2d] == '1')
-		|| (data->map[(j - 1) / data->i_2d][i / data->i_2d] == '1'
-		&& data->map[j / data->i_2d][(i + 1) / data->i_2d] == '1'))
+	if (data->map[j / data->i_2d][(i - 1) / data->i_2d] == '1'
+		&& data->map[(j - 1) / data->i_2d][i / data->i_2d] == '1')
 		return (0);
+	else if(data->map[(j - 1) / data->i_2d][i / data->i_2d] == '1'
+		&& data->map[j / data->i_2d][(i + 1) / data->i_2d] == '1')
+		return (0);
+	else if (data->map[(j + 1) / data->i_2d][i / data->i_2d] == '1'
+		&& data->map[j / data->i_2d][(i + 1) / data->i_2d] == '1')
+			return (0);
+	else if (data->map[(j) / data->i_2d][(i - 1)/ data->i_2d] == '1'
+		&& data->map[(j + 1) / data->i_2d][i  / data->i_2d] == '1')
+			return (0);
 	return (1);
 }
 
@@ -62,7 +74,7 @@ void	player_init(t_cub *data)
 	data->walk = 0;
 	data->move_speed = 6;
 	data->rotation_angle = check_direction(data);
-	data->rotation_speed = 6 * (PI / 180);
+	data->rotation_speed = 3 * (PI / 180);
 }
 
 void	player_pos(t_cub *data)
