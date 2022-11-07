@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:21 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/04 12:41:41 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:46:03 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,19 @@ void	load_texture(t_cub *data)
 	data->tex.img[0].texture = mlx_xpm_file_to_image(data->mlx,
 			data->xpm_file[0], &x, &y);
 	if (!data->tex.img[0].texture)
-		exit(0);
+		xpm_error();
 	data->tex.img[1].texture = mlx_xpm_file_to_image(data->mlx,
 			data->xpm_file[1], &x, &y);
 	if (!data->tex.img[1].texture)
-		exit(0);
+		xpm_error();
 	data->tex.img[2].texture = mlx_xpm_file_to_image(data->mlx,
 			data->xpm_file[2], &x, &y);
 	if (!data->tex.img[2].texture)
-		exit(0);
+		xpm_error();
 	data->tex.img[3].texture = mlx_xpm_file_to_image(data->mlx,
 			data->xpm_file[3], &x, &y);
 	if (!data->tex.img[3].texture)
-		exit(0);
+		xpm_error();
 	get_address(&data->tex);
 }
 

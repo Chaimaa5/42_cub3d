@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MapTools.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 20:05:53 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/02 21:48:23 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/04 00:15:25 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*check_nb(char *color, int x, int j)
 			x++;
 		if (color[i] != ' ' && color[i] != '\t')
 			nb[j++] = color[i];
-		if (color[i] == ' ' && ft_isdigit(color[i - 1]))
+		if ((color[i] == ' ' || color[i] == '\t') && ft_isdigit(color[i - 1]))
 		{
 			if (0 > its_ok(color, i))
 				return (NULL);

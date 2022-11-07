@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:15 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/04 13:16:11 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:23:15 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,10 @@ int	direction(t_cub *data)
 
 	x = data->pixelx / data->i_2d;
 	y = data->pixely / data->i_2d;
-	//north
 	if (data->map[((int)data->pixely + 1) / data->i_2d][x] == '0')
 		data->tex.texpos = 1;
-	//east
 	if (data->map[y][((int)data->pixelx + 1) / data->i_2d] == '0')
 		data->tex.texpos = 2;
-		//south
 	if (data->map[((int)data->pixely - 1) / data->i_2d][x] == '0')
 		data->tex.texpos = 3;
 	if (data->map[y][((int)data->pixelx - 1) / data->i_2d] == '0')
@@ -78,9 +75,9 @@ void	wall_projection(t_cub *data, int i)
 		if (direction(data) == 2 || direction(data) == 4)
 			data->tex.tex_x = fmod(data->pixely / 50, 1) * 50;
 		data->tex.tex_y = ((j - toppix) * 50) / data->wall;
-		if (j < (WINDOW_HEIGHT - data->wall) / 2)
+		if (j < toppix)
 			pixel_put(&data->img_3d, i, j, rgb_to_color(data, 'C'));
-		else if (j < ((WINDOW_HEIGHT - data->wall) / 2) + data->wall)
+		else if (j < toppix + data->wall)
 			pixel_put(&data->img_3d, i, j, get_pixel_color(&data->tex));
 		else
 			pixel_put(&data->img_3d, i, j, rgb_to_color(data, 'F'));

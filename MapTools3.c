@@ -3,14 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   MapTools3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 20:05:58 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/02 20:05:58 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/04 13:21:22 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	check_player(char **map)
+{
+	int	i;
+	int	j;
+	int	x;
+
+	x = 0;
+	i = -1;
+	j = -1;
+	while (map[++j])
+	{
+		i = -1;
+		while (map[j][++i])
+		{
+			if (map[j][i] != '1' && map[j][i] != ' ' && map[j][i] != '0')
+			{
+				x++;
+				if (map[j][i] != 'N' && map[j][i] != 'S'
+					&& map[j][i] != 'W' && map[j][i] != 'E')
+					return (0);
+			}
+		}
+	}
+	if (x != 1)
+		return (0);
+	return (1);
+}
+
+void	xpm_error(void)
+{
+	printf("Xpm file not valid\n");
+	exit(0);
+}
 
 int	check_elements(t_cub *data)
 {

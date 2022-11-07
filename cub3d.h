@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 22:09:03 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/03 16:22:35 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:52:57 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ int		check_all(t_cub *data);
 int		init_map(char *file, t_cub *data);
 double	check_direction(t_cub *data);
 int		long_line(t_cub *data);
+void	xpm_error(void);
 
 #endif

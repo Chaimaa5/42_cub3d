@@ -6,7 +6,7 @@
 /*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 20:52:02 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/02 20:52:02 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:26:00 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	is_close(char **map)
 	{
 		while (map[j][i] == ' ')
 			i++;
-		if (map[j][i] != '1' && map[j][ft_strlen(map[j]) - 1] != '1')
+		if (map[j][i] != '1' || map[j][ft_strlen(map[j]) - 1] != '1')
 			return (0);
 		i = 0;
 	}
