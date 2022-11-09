@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Render.c                                           :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:18 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/04 12:21:25 by mmoutawa         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:10:01 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	render_square(t_cub *data, int x, int y, int xx)
 	int	i;
 	int	j;
 
-	i = 0;
-	j = 0;
+	i = 1;
+	j = 1;
 	while (i < xx)
 	{
-		j = 0;
+		j = 1;
 		while (j < xx)
 		{
 			pixel_put(&data->img_3d, x + j, y + i, 0x00);

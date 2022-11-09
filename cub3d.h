@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 22:09:03 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/03 22:52:57 by mmoutawa         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:52:09 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,23 @@
 # define KEY_S 1
 # define KEY_W 13
 # define KEY_D 2
+# define EVENT_KEY_PRESS 2
+# define EVENT_KEY_RELEASE 3
+# define EVENT_MOUSE_PRESS 4
+# define EVENT_MOUSE_RELEASE 5
+# define EVENT_MOUSE_MOVE 6
+# define EVENT_EXPOSE 12
+# define EVENT_CLOSE 17
+
+// Defining Mouse Button Codes
+
+# define MOUSE_LEFT_BUTTON 1
+# define MOUSE_RIGHT_BUTTON 2
+# define MOUSE_MIDDLE_BUTTON 2
+# define MOUSE_SCROLL_UP 4
+# define MOUSE_SCROLL_DOWN 5
+# define MOUSE_SCROLL_LEFT 6
+# define MOUSE_SCROLL_RIGHT 7
 
 typedef struct s_img{
 	void	*mlx_img;

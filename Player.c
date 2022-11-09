@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:12 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/07 20:36:41 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:44:09 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ void	player_init(t_cub *data)
 {
 	data->side = 0;
 	data->walk = 0;
-	data->move_speed = 6;
+	data->move_speed = 10;
 	data->rotation_angle = check_direction(data);
-	data->rotation_speed = 2 * (PI / 180);
+	data->rotation_speed = 8 * (PI / 180);
 }
 
 void	player_pos(t_cub *data)
