@@ -6,7 +6,7 @@
 /*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 20:05:56 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/04 12:28:29 by mmoutawa         ###   ########.fr       */
+/*   Updated: 2022/11/11 19:40:17 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,47 +19,23 @@ int	set_xmp(char *xpm, t_cub *data, int x)
 
 	y = 0;
 	i = 0;
+	while (xpm[i] == ' ' || xpm[i] == '\t')
+		i++;
+	i += 2;
 	while (xpm[i] && xpm[i] != '.')
 	{
-		if ((xpm[i] >= 'A' && xpm[i + 1] <= 'W') || xpm[i] == ' ')
-			i++;
-		if (xpm[i] != '.')
-			i++;
+		if (xpm[i] != ' ' && xpm[i] != '\t')
+			return (7);
+		i++;
 	}
 	y = ft_strlen(xpm) - 1;
 	if (i >= y)
 		return (7);
-	while (xpm[y] == ' ')
+	while (xpm[y] == ' ' || xpm[y] == '\t')
 		y--;
 	if (!y)
 		return (7);
 	data->xpm_file[x] = ft_substr(xpm, i, y - i + 1);
-	return (1);
-}
-
-int	set_color(t_cub *data, char *color, char c)
-{
-	int		i;
-	int		x;
-	char	*nb;
-
-	i = 0;
-	x = ft_strlen(color) - 1;
-	while (!ft_isdigit(color[i]) && color[i])
-		i++;
-	if (i >= x || (color[i - 1] != ' ' && color[i - 1] != '\t'))
-		return (7);
-	while (color[x] == ' ' || color[x] == '\t')
-		x--;
-	nb = ft_substr(color, i, x - i + 1);
-	nb = check_nb(nb, 0, 0);
-	if (!nb)
-		return (7);
-	if (c == 'F' && !data->f_color)
-		data->f_color = ft_split(nb, ',');
-	else if (c == 'C' && !data->c_color)
-		data->c_color = ft_split(nb, ',');
-	free(nb);
 	return (1);
 }
 

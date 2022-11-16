@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:08 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/08 21:06:35 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:43:41 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	move_up(t_cub *data)
 	{
 		data->xpos += cos(data->rotation_angle) * data->move_step;
 		data->ypos += sin(data->rotation_angle) * data->move_step;
-		// render_map(data);
+		render_map(data);
 	}
 }
 
@@ -32,7 +32,7 @@ void	move_down(t_cub *data)
 	{
 		data->xpos += cos(data->rotation_angle) * data->move_step;
 		data->ypos += sin(data->rotation_angle) * data->move_step;
-		// render_map(data);
+		render_map(data);
 	}
 }
 
@@ -40,14 +40,14 @@ void	rotate_left(t_cub *data)
 {
 	data->side = -1;
 	data->rotation_angle += data->side * data->rotation_speed;
-	// render_map(data);
+	render_map(data);
 }
 
 void	rotate_right(t_cub *data)
 {
 	data->side = 1;
 	data->rotation_angle += data->side * data->rotation_speed;
-	// render_map(data);
+	render_map(data);
 }
 
 void	move_right_left(t_cub *data, int key)
@@ -61,6 +61,6 @@ void	move_right_left(t_cub *data, int key)
 	{
 		data->xpos += cos(data->rotation_angle + 1.57) * data->move_step;
 		data->ypos += sin(data->rotation_angle + 1.57) * data->move_step;
-		// render_map(data);
+		render_map(data);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 20:05:58 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/04 13:21:22 by mmoutawa         ###   ########.fr       */
+/*   Updated: 2022/11/11 19:42:35 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	check_player(char **map)
 		i = -1;
 		while (map[j][++i])
 		{
-			if (map[j][i] != '1' && map[j][i] != ' ' && map[j][i] != '0')
+			if (map[j][i] != '1' && map[j][i] != ' '
+				&& map[j][i] != '0' && map[j][i] != '\t')
 			{
 				x++;
 				if (map[j][i] != 'N' && map[j][i] != 'S'

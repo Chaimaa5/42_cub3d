@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:58:26 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/08 21:27:22 by cel-mhan         ###   ########.fr       */
+/*   Updated: 2022/11/11 19:32:07 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,38 +45,6 @@ int	mouse(t_cub *data)
 	return (0);
 }
 
-int	button_press(int button, int x, int y, t_cub *data)
-{
-	(void)x;
-	(void)y;
-	
-	if (button == MOUSE_LEFT_BUTTON)
-		rotate_left(data);
-	else if (button == MOUSE_RIGHT_BUTTON)
-		rotate_right(data);
-	return (0);
-}
-
-int button_release(int button, int x, int y, t_cub *data)
-{
-	(void)x;
-	(void)y;
-	
-	if (button == EVENT_MOUSE_RELEASE)
-		data->rotation_angle = 0;
-	return (0);
-}
-
-int handler(t_cub *data)
-{
-	mlx_hook(data->mlx_win, 2, 0, key_handler, data);
-	mlx_hook(data->mlx_win, 17, 0L, mouse, data);
-	mlx_hook(data->mlx_win, 04, 1L<<2, button_press, data);
-	// mlx_hook(data->mlx_win, 05, 1L<<3, button_release, data);
-	render_map(data);
-	return (0);
-}
-
 void	window(t_cub *data)
 {
 	data->i_2d = 50;
@@ -87,8 +55,9 @@ void	window(t_cub *data)
 			&data->img_3d.bpp, &data->img_3d.line, &data->img_3d.endian);
 	load_texture(data);
 	player_pos(data);
-	// render_map(data);
-	mlx_loop_hook(data->mlx, handler, data);
+	render_map(data);
+	mlx_hook(data->mlx_win, 2, 0, key_handler, data);
+	mlx_hook(data->mlx_win, 17, 0L, mouse, data);
 	mlx_loop(data->mlx);
 }
 

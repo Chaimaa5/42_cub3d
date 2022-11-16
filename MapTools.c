@@ -6,22 +6,11 @@
 /*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 20:05:53 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/04 00:15:25 by mmoutawa         ###   ########.fr       */
+/*   Updated: 2022/11/11 19:34:34 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	its_ok(char *color, int i)
-{
-	while (color[i] == ' ' || color[i] == '\t')
-	{
-		if ((color[i] == ' ' || color[i] == '\t') && ft_isdigit(color[i + 1]))
-			return (-1);
-		i++;
-	}
-	return (i - 1);
-}
 
 char	*check_nb(char *color, int x, int j)
 {
@@ -84,6 +73,21 @@ void	rgb(t_cub *data)
 	data->colors.b_f = ft_atoi(data->f_color[2]);
 }
 
+int	is_nb(char *color)
+{
+	int	i;
+
+	i = -1;
+	if (ft_strlen(color) > 3)
+		return (0);
+	while (color[++i])
+	{
+		if (!ft_isdigit(color[i]))
+			return (0);
+	}
+	return (1);
+}
+
 int	check_colors(t_cub *data)
 {
 	int	i;
@@ -95,9 +99,7 @@ int	check_colors(t_cub *data)
 		return (0);
 	while (data->c_color[j] && data->f_color[i])
 	{
-		if (ft_strlen(data->c_color[j]) > 3)
-			return (0);
-		if (ft_strlen(data->f_color[i]) > 3)
+		if (!is_nb(data->c_color[j]) || !is_nb(data->f_color[i]))
 			return (0);
 		if (ft_atoi(data->c_color[j]) > 255)
 			return (0);
